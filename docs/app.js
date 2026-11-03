@@ -2,6 +2,7 @@ import { initialWeights, averageEdge, goalsMet, validateLevel } from './engine.j
 import { installBoardTouch } from './touch.js';
 import { layoutGarden } from './layout.js';
 import { t, moveCount, translateLevel, getLanguage, setLanguage, applyStaticTranslations } from './i18n.js';
+import { isRecord, completionTotals, highestUnlockedIndex, isLevelUnlocked, currentIndexForProgress, pendingMilestones, acknowledgeMilestone, recordCompletion, normalizeProgress, isValidResume } from './progression.js';
 
 const $ = id => document.getElementById(id);
 const storageKey = 'a-share-of-light-progress-v1';
@@ -27,26 +28,22 @@ let storageAvailable = true;
 let toastTimer;
 let toastMessage;
 let loadFailed = false;
-let progress = { records: {}, current: 0, sound: false, active: null, celebrated: false };
+let storedProgress = null;
+let progress = normalizeProgress(null, []);
+let activeMilestone = null;
+let milestoneTimer;
 
 function readProgress() {
   try {
-    const stored = JSON.parse(localStorage.getItem(storageKey) ?? localStorage.getItem(legacyStorageKey) ?? 'null');
-    if (stored && typeof stored === 'object') {
-      progress.records = stored.records && typeof stored.records === 'object' ? stored.records : {};
-      progress.current = Number.isInteger(stored.current) ? stored.current : 0;
-      progress.sound = stored.sound === true;
-      progress.celebrated = stored.celebrated === true;
-      progress.active = stored.active || null;
-    }
+    storedProgress = JSON.parse(localStorage.getItem(storageKey) ?? localStorage.getItem(legacyStorageKey) ?? 'null');
   } catch { storageAvailable = false; }
-  soundEnabled = progress.sound;
+  soundEnabled = storedProgress?.sound === true;
 }
 
 function saveProgress() {
-  progress.current = current;
+  progress.currentId = levels[current]?.id ?? null;
   progress.sound = soundEnabled;
-  progress.active = { level: current, weights, history, hintStep };
+  progress.active = { levelId: progress.currentId, weights, history, hintStep };
   try { localStorage.setItem(storageKey, JSON.stringify(progress)); }
   catch { storageAvailable = false; }
   renderSaveNote();
@@ -61,12 +58,8 @@ function format(value) {
   return String(rounded) + '%';
 }
 
-function isRecord(record) {
-  return record && Number.isInteger(record.moves) && record.moves > 0;
-}
-
 function completedCount() {
-  return levels.filter(level => isRecord(progress.records[level.id])).length;
+  return completionTotals(levels, progress.records).completed;
 }
 
 function closeDialogs() {
@@ -86,23 +79,12 @@ function toast(key, parameters = {}) {
   toastTimer = setTimeout(() => { $('toast').hidden = true; toastMessage = null; }, 2800);
 }
 
-function validResume(active, level) {
-  const validWeights = candidate => Array.isArray(candidate) && candidate.length === level.nodes.length && candidate.every(value => Number.isFinite(value) && value >= 0 && value <= 100) && Math.abs(candidate.reduce((a, b) => a + b, 0) - 100) < 1e-8;
-  if (!active || active.level !== current || !validWeights(active.weights) || !Array.isArray(active.history) || active.history.length > level.budget || !active.history.every(validWeights)) return false;
-  if (!active.history.length) return active.weights.every((value, index) => value === initialWeights(level)[index]);
-  const snapshots = [...active.history, active.weights];
-  if (!snapshots[0].every((value, index) => value === initialWeights(level)[index])) return false;
-  for (let step = 0; step < snapshots.length - 1; step++) {
-    if (!level.edges.some(edge => averageEdge(snapshots[step], edge).every((value, index) => value === snapshots[step + 1][index]))) return false;
-  }
-  return true;
-}
-
 function renderLevelText() {
   const level = translateLevel(levels[current]);
   const targets = level.nodes.filter(node => node.goal !== undefined);
   $('level-eyebrow').textContent = t('level.eyebrow', {
     number: String(current + 1).padStart(2, '0'),
+    total: levels.length,
     chapter: (level.chapter || t('level.defaultChapter')).toUpperCase()
   });
   $('level-title').textContent = level.name;
@@ -128,6 +110,7 @@ function refreshLanguage() {
     renderNavigation();
     renderHint();
     renderCompletionStats();
+    if (activeMilestone) renderMilestone();
     layoutBoard();
   } else if (loadFailed) {
     renderLoadError();
@@ -136,7 +119,11 @@ function refreshLanguage() {
 }
 
 function loadLevel(index, resume = false) {
-  if (!levels[index]) return;
+  if (!levels[index]) return false;
+  if (!isLevelUnlocked(levels, progress.records, index)) {
+    toast('toast.locked', { number: index });
+    return false;
+  }
   animationToken++;
   busy = false;
   current = index;
@@ -145,10 +132,10 @@ function loadLevel(index, resume = false) {
   weights = initialWeights(level);
   history = [];
   hintStep = -1;
-  if (resume && validResume(active, level)) {
+  if (resume && isValidResume(active, level)) {
     weights = active.weights.slice();
     history = active.history.map(state => state.slice());
-    hintStep = Number.isInteger(active.hintStep) ? Math.max(-1, Math.min(2, active.hintStep)) : -1;
+    hintStep = Number.isInteger(active.hintStep) ? Math.max(-1, Math.min(1, active.hintStep)) : -1;
   }
   if (goalsMet(level, weights)) recordVictory();
   $('target-list').replaceChildren();
@@ -170,6 +157,8 @@ function loadLevel(index, resume = false) {
   renderNavigation();
   renderHint();
   saveProgress();
+  scheduleMilestone();
+  return true;
 }
 
 function buildBoard() {
@@ -346,7 +335,7 @@ function clearPreview() {
 
 function takeMove(index) {
   const level = levels[current];
-  if (!level || busy || !level.edges[index] || goalsMet(level, weights) || history.length >= level.budget) return;
+  if (!level || !isLevelUnlocked(levels, progress.records, current) || busy || !level.edges[index] || goalsMet(level, weights) || history.length >= level.budget) return;
   clearPreview();
   const before = weights.slice();
   const [left, right] = level.edges[index];
@@ -367,6 +356,7 @@ function takeMove(index) {
     if (token !== animationToken) return;
     busy = false;
     if (goalsMet(level, weights)) finishLevel();
+    else scheduleMilestone();
     render();
     saveProgress();
   }, reducedMotion.matches ? 20 : 180);
@@ -402,8 +392,8 @@ function animateTransfer([a, b], before, token) {
 
 function recordVictory() {
   const level = levels[current];
-  const record = progress.records[level.id];
-  if (!isRecord(record) || history.length < record.moves) progress.records[level.id] = { moves: history.length };
+  if (!goalsMet(level, weights)) return;
+  progress = recordCompletion(progress, levels, current, history.length);
 }
 
 function finishLevel() {
@@ -418,10 +408,7 @@ function finishLevel() {
       node.classList.add('bloom-burst');
     });
   }
-  if (completedCount() === levels.length && !progress.celebrated) {
-    const token = animationToken;
-    setTimeout(() => { if (token === animationToken) showCompletion(); }, 1200);
-  }
+  scheduleMilestone(850);
 }
 
 function undo() {
@@ -456,65 +443,110 @@ function renderNavigation() {
     const record = progress.records[level.id];
     const complete = isRecord(record);
     const mastered = complete && record.moves <= level.par;
-    const classes = (index === current ? ' active' : '') + (complete ? ' complete' : '') + (mastered ? ' mastered' : '');
+    const locked = !isLevelUnlocked(levels, progress.records, index);
+    const classes = (index === current ? ' active' : '') + (complete ? ' complete' : '') + (mastered ? ' mastered' : '') + (locked ? ' locked' : '');
     const step = document.createElement('button');
     step.type = 'button';
     step.className = 'level-step' + classes;
-    step.setAttribute('aria-label', t('nav.label', { number: index + 1, name: text.name, difficulty: t('difficulty.' + level.difficulty), status: mastered ? t('nav.mastered') : complete ? t('nav.complete') : '' }));
+    step.disabled = locked;
+    step.setAttribute('aria-disabled', String(locked));
+    step.setAttribute('aria-label', t('nav.label', { number: index + 1, name: text.name, difficulty: t('difficulty.' + level.difficulty), status: locked ? t('nav.locked') : mastered ? t('nav.mastered') : complete ? t('nav.complete') : '' }));
     if (index === current) step.setAttribute('aria-current', 'step');
-    step.title = text.name;
-    step.innerHTML = '<span>' + String(index + 1).padStart(2, '0') + '</span>' + (complete ? '<span class="step-flower">' + icons(mastered ? 'leaf' : 'check') + '</span>' : '');
+    step.title = locked ? t('nav.unlockHint', { number: index }) : text.name;
+    step.innerHTML = '<span>' + String(index + 1).padStart(2, '0') + '</span>' + (locked ? '<span class="step-lock">' + icons('lock') + '</span>' : complete ? '<span class="step-flower">' + icons(mastered ? 'leaf' : 'check') + '</span>' : '');
     step.addEventListener('click', () => loadLevel(index));
     $('level-track').append(step);
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'level-card' + classes;
-    card.innerHTML = '<span class="level-card-number">' + String(index + 1).padStart(2, '0') + '</span>' + miniGraph(level) + '<span class="level-card-title"></span><span class="level-card-meta"></span>' + (complete ? '<span class="level-card-award">' + icons(mastered ? 'star' : 'check') + '</span>' : '');
+    card.disabled = locked;
+    card.setAttribute('aria-disabled', String(locked));
+    card.innerHTML = '<span class="level-card-number">' + String(index + 1).padStart(2, '0') + '</span>' + miniGraph(level) + '<span class="level-card-title"></span><span class="level-card-meta"></span>' + (locked ? '<span class="level-card-lock">' + icons('lock') + '</span>' : complete ? '<span class="level-card-award">' + icons(mastered ? 'star' : 'check') + '</span>' : '');
     card.querySelector('.level-card-title').textContent = text.name;
-    card.querySelector('.level-card-meta').textContent = t('nav.meta', { difficulty: t('difficulty.' + level.difficulty), moves: moveCount(level.budget) });
+    card.querySelector('.level-card-meta').textContent = locked ? t('nav.unlockHint', { number: index }) : t('nav.meta', { difficulty: t('difficulty.' + level.difficulty), moves: moveCount(level.budget) });
     card.setAttribute('aria-label', step.getAttribute('aria-label'));
     card.addEventListener('click', () => { closeDialogs(); loadLevel(index); });
     $('level-grid').append(card);
   });
   const count = completedCount();
-  $('journey-progress').textContent = t('journey.progress', { count });
+  $('journey-progress').textContent = t('journey.progress', { count, total: levels.length });
 }
 
 function hintTexts() {
   const level = translateLevel(levels[current]);
   const hints = Array.isArray(level.hints) ? level.hints.slice(0, 2) : [level.hint];
   if (!hints[0]) hints[0] = t('hint.first');
-  if (!hints[1]) {
-    const [a, b] = level.edges[level.solution[0]];
-    hints[1] = t('hint.second', { a: level.nodes[a].label, b: level.nodes[b].label });
-  }
-  hints[2] = t('hint.solution', { path: level.solution.map(edgeIndex => { const [a, b] = level.edges[edgeIndex]; return level.nodes[a].label + '–' + level.nodes[b].label; }).join(' → ') });
+  if (!hints[1]) hints[1] = t('hint.second');
   return hints;
 }
 
 function renderHint() {
+  hintStep = Math.max(-1, Math.min(1, hintStep));
   const shown = hintStep >= 0;
   $('hint-box').hidden = !shown;
   $('hint-button').setAttribute('aria-expanded', String(shown));
   $('hint-button').querySelector('span').textContent = shown ? '−' : '+';
   if (shown) $('hint-copy').textContent = hintTexts()[hintStep];
   $('phone-hint-copy').textContent = hintTexts()[Math.max(0, hintStep)];
-  $('hint-more').hidden = hintStep >= 2;
-  $('phone-hint-more').hidden = hintStep >= 2;
-  $('hint-more').innerHTML = t(hintStep === 1 ? 'hint.complete' : 'hint.stronger') + ' <span>↗</span>';
+  $('hint-more').hidden = hintStep >= 1;
+  $('phone-hint-more').hidden = hintStep >= 1;
+  $('hint-more').innerHTML = t('hint.stronger') + ' <span>↗</span>';
   $('phone-hint-more').innerHTML = $('hint-more').innerHTML;
 }
 
-function showCompletion() {
-  progress.celebrated = true;
-  saveProgress();
+function renderMilestone() {
+  if (!activeMilestone) return;
+  const prefix = 'milestone.' + activeMilestone;
+  $('completion-eyebrow').textContent = t(prefix + '.eyebrow');
+  $('completion-title').textContent = t(prefix + '.title');
+  $('completion-copy').textContent = t(prefix + '.copy');
+  $('milestone-primary').innerHTML = t(prefix + '.action') + icons('arrow');
+  $('completion-challenge').hidden = activeMilestone !== 'mastered';
+  $('completion-dialog').dataset.milestone = activeMilestone;
   renderCompletionStats();
-  openDialog('completion-dialog');
+}
+
+function scheduleMilestone(delay = 0) {
+  clearTimeout(milestoneTimer);
+  progress.milestonesPending = pendingMilestones(progress, levels);
+  if (activeMilestone || !progress.milestonesPending.length) return;
+  milestoneTimer = setTimeout(() => {
+    if (busy || activeMilestone || document.querySelector('dialog[open]')) return;
+    activeMilestone = progress.milestonesPending[0];
+    if (!activeMilestone) return;
+    renderMilestone();
+    $('completion-dialog').showModal();
+  }, delay);
+}
+
+function acknowledgeActiveMilestone() {
+  const kind = activeMilestone;
+  if (!kind) return null;
+  progress = acknowledgeMilestone(progress, kind);
+  activeMilestone = null;
+  saveProgress();
+  return kind;
+}
+
+function continueMilestone() {
+  const kind = acknowledgeActiveMilestone();
+  closeDialogs();
+  if (kind === 'ten' || kind === 'twenty') {
+    loadLevel(highestUnlockedIndex(levels, progress.records));
+  } else {
+    renderNavigation();
+    openDialog('levels-dialog');
+    const nextGold = $('level-grid').querySelector('.level-card:not(.mastered):not(:disabled)');
+    if (nextGold) {
+      nextGold.focus();
+      nextGold.scrollIntoView({ block: 'nearest' });
+    }
+  }
 }
 
 function renderCompletionStats() {
-  const gold = levels.filter(level => isRecord(progress.records[level.id]) && progress.records[level.id].moves <= level.par).length;
-  $('completion-stats').innerHTML = '<div><strong>10</strong><span>' + t('completion.gardens') + '</span></div><div><strong>' + gold + '</strong><span>' + t('completion.gold') + '</span></div>';
+  const { completed, gold } = completionTotals(levels, progress.records);
+  $('completion-stats').innerHTML = '<div><strong>' + completed + '</strong><span>' + t('completion.gardens') + '</span></div><div><strong>' + gold + '</strong><span>' + t('completion.gold') + '</span></div>';
 }
 
 function updateSoundButton() {
@@ -552,18 +584,26 @@ function playSound(kind, index = 0) {
 function wireControls() {
   $('undo-button').addEventListener('click', undo);
   $('restart-button').addEventListener('click', restart);
-  $('next-level').addEventListener('click', () => { if (current < levels.length - 1) loadLevel(current + 1); else { renderNavigation(); openDialog('levels-dialog'); } });
+  $('next-level').addEventListener('click', () => {
+    if (!levels[current] || !goalsMet(levels[current], weights)) return;
+    if (current < levels.length - 1) loadLevel(current + 1);
+    else { renderNavigation(); openDialog('levels-dialog'); }
+  });
   $('levels-button').addEventListener('click', () => openDialog('levels-dialog'));
   $('help-button').addEventListener('click', () => openDialog('help-dialog'));
   $('math-button').addEventListener('click', () => openDialog('math-dialog'));
-  $('revisit-button').addEventListener('click', () => { closeDialogs(); openDialog('levels-dialog'); });
+  $('milestone-primary').addEventListener('click', continueMilestone);
   $('hint-button').addEventListener('click', () => { hintStep = hintStep < 0 ? 0 : -1; renderHint(); saveProgress(); });
-  $('hint-more').addEventListener('click', () => { hintStep = Math.min(2, hintStep + 1); renderHint(); saveProgress(); });
+  $('hint-more').addEventListener('click', () => { hintStep = Math.min(1, hintStep + 1); renderHint(); saveProgress(); });
   $('mobile-hint-button').addEventListener('click', () => { hintStep = Math.max(0, hintStep); renderHint(); saveProgress(); openDialog('hint-dialog'); });
-  $('phone-hint-more').addEventListener('click', () => { hintStep = Math.min(2, hintStep + 1); renderHint(); saveProgress(); });
+  $('phone-hint-more').addEventListener('click', () => { hintStep = Math.min(1, hintStep + 1); renderHint(); saveProgress(); });
   $('sound-button').addEventListener('click', () => { soundEnabled = !soundEnabled; updateSoundButton(); saveProgress(); if (soundEnabled) playSound('move'); });
   document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
   document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close(); } }));
+  document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('close', () => {
+    if (dialog.id === 'completion-dialog' && !dialog.open) acknowledgeActiveMilestone();
+    scheduleMilestone();
+  }));
   document.addEventListener('keydown', event => {
     if (document.querySelector('dialog[open]') || event.ctrlKey || event.metaKey || event.altKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
     if (event.key.toLowerCase() === 'z') { event.preventDefault(); undo(); }
@@ -576,7 +616,7 @@ function wireControls() {
     getPositions: () => positions,
     getNodeRadius: () => parseFloat($('garden-board').style.getPropertyValue('--node-size')) / 2,
     onEdgeTap: takeMove,
-    canInteract: () => !!levels[current] && !busy && !goalsMet(levels[current], weights) && history.length < levels[current].budget
+    canInteract: () => isLevelUnlocked(levels, progress.records, current) && !busy && !goalsMet(levels[current], weights) && history.length < levels[current].budget
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden) saveProgress(); });
 }
@@ -609,14 +649,15 @@ async function boot() {
       if (!response.ok) throw new Error('Unable to load level data');
       data = await response.json();
     }
-    if (!Array.isArray(data) || data.length !== 10) throw new Error('Expected ten levels');
+    if (!Array.isArray(data) || data.length !== 30) throw new Error('Expected thirty levels');
     data.forEach(level => { const errors = validateLevel(level); if (errors.length) throw new Error('Level ' + level.id + ': ' + errors.join(', ')); });
     levels = data;
-    progress.records = Object.fromEntries(levels.filter(level => isRecord(progress.records[level.id]) && progress.records[level.id].moves <= level.budget).map(level => [level.id, progress.records[level.id]]));
+    progress = normalizeProgress(storedProgress, levels);
+    soundEnabled = progress.sound;
     $('loading-message').hidden = true;
     wireControls();
     addFireflies();
-    loadLevel(Math.max(0, Math.min(levels.length - 1, progress.current)), true);
+    loadLevel(currentIndexForProgress(levels, progress), true);
   } catch (error) {
     loadFailed = true;
     renderLoadError();

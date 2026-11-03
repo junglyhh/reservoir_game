@@ -1,0 +1,115 @@
+{
+  "1": {
+    "optimalVerified": true,
+    "optimalMoves": 1,
+    "provedThrough": 0,
+    "visited": 2,
+    "solution": [
+      0
+    ]
+  },
+  "2": {
+    "optimalVerified": true,
+    "optimalMoves": 2,
+    "provedThrough": 1,
+    "visited": 3,
+    "solution": [
+      0,
+      1
+    ]
+  },
+  "3": {
+    "optimalVerified": true,
+    "optimalMoves": 4,
+    "provedThrough": 3,
+    "visited": 11,
+    "solution": [
+      0,
+      1,
+      0,
+      1
+    ]
+  },
+  "4": {
+    "optimalVerified": true,
+    "optimalMoves": 5,
+    "provedThrough": 4,
+    "visited": 20,
+    "solution": [
+      0,
+      1,
+      2,
+      0,
+      2
+    ]
+  },
+  "5": {
+    "optimalVerified": true,
+    "optimalMoves": 7,
+    "provedThrough": 6,
+    "visited": 125,
+    "solution": [
+      0,
+      1,
+      2,
+      0,
+      3,
+      2,
+      3
+    ]
+  },
+  "6": {
+    "optimalVerified": true,
+    "optimalMoves": 7,
+    "provedThrough": 6,
+    "visited": 1096,
+    "solution": [
+      0,
+      2,
+      4,
+      1,
+      3,
+      1,
+      3
+    ]
+  },
+  "7": {
+    "optimalVerified": true,
+    "optimalMoves": 11,
+    "provedThrough": 10,
+    "visited": 39802,
+    "solution": [
+      0,
+      1,
+      0,
+      1,
+      3,
+      5,
+      2,
+      4,
+      0,
+      2,
+      4
+    ]
+  },
+  "8": {
+    "optimalVerified": true,
+    "optimalMoves": 12,
+    "provedThrough": 11,
+    "visited": 24275,
+    "solution": [
+      0,
+      1,
+      0,
+      1,
+      2,
+      3,
+      1,
+      0,
+      3,
+      4,
+      1,
+      4
+    ]
+  }
+}

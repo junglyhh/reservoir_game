@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { runInNewContext } from 'node:vm';
 import { messages, t, moveCount, translateLevel, setLanguage, getLanguage, applyStaticTranslations } from './docs/i18n.js';
 import { levelTranslations } from './docs/i18n-levels.js';
 import { goalsMet } from './docs/engine.js';
@@ -112,7 +111,7 @@ for (const count of [0, 1, 2, 18]) assert.equal(moveCount(count), `${count} 步`
 assert.equal(setLanguage('unsupported'), 'zh', 'Invalid languages must not corrupt the current selection');
 groups++;
 
-assert.equal(levels.length, 10);
+assert.equal(levels.length, 30);
 const narrativeFields = ['name', 'chapter', 'subtitle', 'hint', 'hints', 'discovery'];
 const before = JSON.stringify(levels);
 for (const language of ['en', 'zh', 'en', 'zh']) {
@@ -132,7 +131,7 @@ for (const language of ['en', 'zh', 'en', 'zh']) {
         assert.ok(copy.every(value => !/[A-Za-z]{2,}/.test(value)), `English prose in level ${level.id}:${field}`);
       }
     }
-    assert.equal(localized.hints.length, 3);
+    assert.ok(localized.hints.length >= 1 && localized.hints.length <= 2, 'Hints stay conceptual and limited');
   }
 }
 assert.equal(JSON.stringify(levels), before, 'Repeated language switching must leave original level data intact');
@@ -162,31 +161,8 @@ try {
 }
 groups++;
 
-// Exercise the real read function with old and new browser saves: renaming
-// the game must not erase records, the active puzzle, sound, or language.
-const readProgressSource = app.match(/function readProgress\(\) \{[\s\S]*?\n\}/)?.[0];
-assert.ok(readProgressSource, 'Progress reader must be available for migration checks');
-const storageKey = app.match(/const storageKey = '([^']+)'/)[1];
-const legacyStorageKey = app.match(/const legacyStorageKey = '([^']+)'/)[1];
-const savedProgress = {
-  records: { 1: { moves: 1 }, 7: { moves: 11 } }, current: 8, sound: true,
-  active: { level: 8, weights: [50, 50, 0, 0, 0, 0], history: [[100, 0, 0, 0, 0, 0]], hintStep: 1 },
-  celebrated: true
-};
-for (const useNewKey of [false, true]) {
-  const saved = new Map([[legacyStorageKey, JSON.stringify(savedProgress)]]);
-  const expected = useNewKey ? { ...savedProgress, current: 9 } : savedProgress;
-  if (useNewKey) saved.set(storageKey, JSON.stringify(expected));
-  const context = {
-    storageKey, legacyStorageKey, localStorage: { getItem: key => saved.get(key) ?? null },
-    progress: { records: {}, current: 0, sound: false, active: null, celebrated: false },
-    storageAvailable: true, soundEnabled: false
-  };
-  runInNewContext(readProgressSource + '\nreadProgress();', context);
-  assert.deepEqual(JSON.parse(JSON.stringify(context.progress)), expected, 'Saved progress must survive the rename; the new key takes precedence');
-  assert.equal(context.soundEnabled, true);
-  assert.equal(context.storageAvailable, true);
-}
+// Campaign save migration is covered by test-progression.mjs. Language
+// preferences still need their independent legacy-key compatibility check.
 const originalStorage = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
 try {
   const saved = new Map([['liquid-light-language-v1', 'zh']]);
@@ -203,4 +179,14 @@ try {
 }
 groups++;
 
-console.log(`Passed ${groups} localization groups: ${Object.keys(messages.en).length} paired messages, ${bindingCount} HTML bindings, 10 localized levels, pluralization, storage fallback, and minimum-goal behavior.`);
+for (const kind of ['ten', 'twenty', 'final', 'mastered']) {
+  for (const part of ['eyebrow', 'title', 'copy', 'action']) {
+    for (const language of ['en', 'zh']) assert.ok(messages[language]['milestone.' + kind + '.' + part]);
+  }
+}
+assert.ok(!Object.hasOwn(messages.en, 'hint.solution') && !Object.hasOwn(messages.zh, 'hint.solution'));
+assert.ok(!Object.hasOwn(messages.en, 'hint.complete') && !Object.hasOwn(messages.zh, 'hint.complete'));
+assert.doesNotMatch(app, /level\.solution|hint\.solution|hint\.complete/);
+groups++;
+
+console.log(`Passed ${groups} localization groups: ${Object.keys(messages.en).length} paired messages, ${bindingCount} HTML bindings, ${levels.length} localized levels, milestones, language preferences, and minimum-goal behavior.`);

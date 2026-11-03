@@ -32,26 +32,24 @@ export function distances(level) {
 
 export function validateLevel(level) {
   const errors = [];
+  if (!level || typeof level !== 'object' || !Array.isArray(level.nodes) || !Array.isArray(level.edges) || !level.nodes.length) return ['Invalid level data'];
+  if (!Number.isInteger(level.id) || level.id < 1) errors.push('Invalid stable level ID');
+  if (!['Easy', 'Medium', 'Hard', 'Master'].includes(level.difficulty)) errors.push('Invalid difficulty');
   if (!Number.isInteger(level.root) || !level.nodes[level.root]) errors.push('Invalid root');
   if (!Number.isInteger(level.budget) || level.budget < 1) errors.push('Invalid move budget');
   if (!Number.isInteger(level.par) || level.par < 1 || level.par > level.budget) errors.push('Invalid par');
   if (!level.nodes.some(node => node.goal > 0)) errors.push('No target');
-  if (!level.edges.every(edge => edge.length === 2 && edge.every(index => Number.isInteger(index) && !!level.nodes[index]) && edge[0] !== edge[1])) errors.push('Invalid edge');
+  if (level.nodes.filter(node => node.goal !== undefined).length > 3) errors.push('Too many blooms');
+  if (!level.edges.every(edge => Array.isArray(edge) && edge.length === 2 && edge.every(index => Number.isInteger(index) && !!level.nodes[index]) && edge[0] !== edge[1])) errors.push('Invalid edge');
   if (errors.length) return errors;
+  if (new Set(level.edges.map(([a, b]) => [Math.min(a, b), Math.max(a, b)].join(':'))).size !== level.edges.length) errors.push('Duplicate edge');
   const distance = distances(level);
   if (distance.some(value => !Number.isFinite(value))) errors.push('Disconnected graph');
   level.nodes.forEach((node, index) => {
     if (node.goal !== undefined && (!(node.goal > 0) || node.goal > 100 / (distance[index] + 1))) errors.push('Invalid target threshold');
     if (![node.x, node.y].every(value => Number.isFinite(value) && value >= 0 && value <= 100)) errors.push('Invalid layout');
   });
-  if (!Array.isArray(level.solution) || level.solution.length > level.par) errors.push('Missing par solution');
-  else {
-    let state = initialWeights(level);
-    for (const edgeIndex of level.solution) {
-      if (!level.edges[edgeIndex]) { errors.push('Invalid solution edge'); break; }
-      state = averageEdge(state, level.edges[edgeIndex]);
-    }
-    if (!goalsMet(level, state)) errors.push('Unsolvable witness');
-  }
+  // Winning sequences live only in validation/ for development checks.
+  // The playable game validates graph data without shipping walkthroughs.
   return errors;
 }

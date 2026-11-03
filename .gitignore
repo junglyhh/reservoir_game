@@ -4,3 +4,5 @@ node_modules/
 test-results/
 playwright-report/
 local-test/
+__pycache__/
+*.py[cod]

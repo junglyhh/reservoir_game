@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node test-game.mjs && node test-touch.mjs && node test-layout.mjs && node test-i18n.mjs",
+    "test": "node test-game.mjs && node test-touch.mjs && node test-layout.mjs && node test-i18n.mjs && node test-progression.mjs",
     "build:local": "node build-local.mjs",
     "dev": "python3 -m http.server 8080 --directory docs"
   }

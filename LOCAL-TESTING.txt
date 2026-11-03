@@ -1,55 +1,81 @@
-A share of light / 流光花园 — LOCAL TESTING / 本地测试指南
+A share of light / 流光花园
+30-LEVEL CAMPAIGN / 三十关版
+
+This guide covers local testing and offline play for the 30-level campaign.
+GitHub Pages is configured to serve docs/ from the main branch at:
+https://junglyhh.github.io/reservoir_game/
+本指南介绍三十关版的本地测试和离线游玩方式。GitHub Pages 使用 main
+分支中的 docs/ 目录部署网页游戏，网址如上。
 
 ENGLISH
 
-1. Open the downloaded a_share_of_light.html in a web browser.
-   If you have a repository checkout, run npm run build:local first,
-   then open the generated local-test/index.html. The standalone game
-   needs no installation, internet connection, or local server to play.
-2. Use the 中 / EN button at the top right to switch languages. Switching
-   language keeps your current puzzle and moves.
-3. Tap an edge to average the amounts at its two ends.
-4. Each marked target is a MINIMUM: current percentage >= required
-   percentage. Exceeding a target is allowed; exact equality is unnecessary.
-   All targets must meet their minimums together within the move limit.
-5. Progress is saved in your browser when local storage is available. A
-   private window or some file-viewer apps may not keep progress. Use an
-   actual web browser if your device only shows a static file preview.
+1. Open a_share_of_light.html in an actual web browser. With a source
+   checkout, run npm run build:local, then open local-test/index.html.
+   The standalone file needs no installation, network, or local server.
+   Phone file-viewer apps may show only a static preview; use a browser
+   that runs the HTML file's JavaScript.
+2. Use 中 / EN at the top right to switch languages. The current puzzle,
+   amounts, undo history, and move count stay in place.
+3. Tap an edge to average the amounts at its ends. All marked targets are
+   MINIMUMS: reach or exceed every threshold together within the move limit.
+   Exact equality is unnecessary. Undo and restart remain available.
+4. Clear a level to unlock the next. Golden blooms are optional for
+   advancement. Locked levels cannot be selected; unlocked levels can be
+   replayed. Hints give two conceptual perspectives, not a full solution.
+5. The 30 levels are ordered Easy (1–3), Medium (4–16), Hard (17–26), and
+   Master (27–30). The 20 additions are 10 Medium, 7 Hard, and 3 Master.
+   Every level has at most three blooms. All gold move targets are verified
+   minima; the normal move limits allow more relaxed completion.
+6. Celebrations appear after the first 10 and 20 levels, after all 30 are
+   cleared if any gold remains, and after all 30 golden blooms are earned.
+   The final all-gold celebration introduces the tea-sharing proof challenge.
+7. Saves migrate by stable puzzle ID, so the original ten puzzles retain
+   their best results after reordering. Earlier completed levels beyond a
+   gap stay recorded but remain locked until preceding levels are cleared.
+   A valid in-progress puzzle resumes only when it is unlocked.
+8. Saves need browser local storage. Private windows, some file viewers,
+   and moving an HTML file may affect persistence. A hosted-site save does
+   not automatically transfer to a downloaded file or another device.
 
-Source repository: https://github.com/junglyhh/reservoir_game
-GitHub Pages (once enabled): https://junglyhh.github.io/reservoir_game/
-
-Optional: serve the editable source from the project directory:
+To test editable docs/ source from the project directory:
     python3 -m http.server 8080 --directory docs
-Then open http://localhost:8080 in your browser.
+Then open http://localhost:8080. This serves locally; it does not publish.
 
-To rebuild the standalone file after editing the source:
-    node build-local.mjs
-The rebuilt file is local-test/index.html.
+Rebuild standalone: npm run build:local
+Run automated checks: npm test
+Read README.md for the full catalog and developer validation notes.
 
 中文
 
-1. 用浏览器打开下载的 a_share_of_light.html，即可开始游戏。
-   如果你使用的是仓库源码，请先运行 npm run build:local，
-   再打开生成的 local-test/index.html。独立网页无需安装、联网，
-   也无需启动本地服务器即可游玩。
-2. 点击第一行右侧的“中 / EN”按钮切换语言。切换语言会保留当前
-   关卡、光量和已用步数。
-3. 点击一条连线，两端水池的光量就会变成它们的平均值。
-4. 每个目标百分比都是最低要求：当前百分比 ≥ 目标百分比。
-   达到或超过目标都可以，不必恰好相等。必须在步数限制内，
-   让所有目标同时达标。
-5. 浏览器允许本地存储时，会自动保存进度。无痕窗口或部分文件
-   预览应用可能无法保存。若设备只显示静态预览，请在真正的
-   浏览器中打开文件。
+1. 用真正的网页浏览器打开 a_share_of_light.html。若使用项目源码，
+   先运行 npm run build:local，再打开 local-test/index.html。
+   独立文件无需安装、联网或本地服务器。部分手机文件预览应用只会
+   显示静态内容，请使用能执行网页 JavaScript 的浏览器。
+2. 点击首行右侧的 中 / EN 切换语言。当前关卡、光量、撤销记录和
+   步数都会保留。
+3. 点击连线，两端水池会平均分配光量。所有目标百分比都是下限：
+   在步数限制内，同时达到或超过全部目标即可，无需恰好相等。
+   可以随时撤销或重新开始当前关卡。
+4. 通关即可解锁下一关，不必先获得金色花朵。未解锁关卡不可选择，
+   已解锁关卡可以重玩。每关有两个思路提示，不提供完整操作步骤。
+5. 三十关依次为简单（1–3）、中等（4–16）、困难（17–26）和大师
+   （27–30）。新增二十关包括十关中等、七关困难和三关大师，每关
+   最多三朵目标花。金色花朵步数均已严格验证为最少步数；正常通关
+   的步数限制更宽松。
+6. 通过前十关、前二十关、全部通关但尚未集齐金色花朵，以及集齐
+   三十朵金色花朵时，会出现相应的庆祝页面。全金庆祝页将介绍
+   “图上的茶水分享”数学问题，作为终极证明挑战。
+7. 旧存档按稳定的关卡身份迁移，原有十关重新排序后仍保留最佳成绩。
+   如果旧记录在中间存在未通关的空缺，后面的成绩仍保留，但必须
+   先补齐前面的关卡才能解锁。进行中的关卡仅在已解锁时恢复。
+8. 存档依赖浏览器本地存储。无痕窗口、部分文件预览器或移动 HTML
+   文件可能影响保存。线上游戏的存档不会自动转移到下载文件，
+   不同设备之间也不会自动同步。
 
-源码仓库：https://github.com/junglyhh/reservoir_game
-启用 GitHub Pages 后的游戏地址：https://junglyhh.github.io/reservoir_game/
-
-如需测试可编辑的源码，可在项目目录运行：
+在项目目录测试可编辑的 docs/ 源码：
     python3 -m http.server 8080 --directory docs
-然后在浏览器打开 http://localhost:8080。
+然后打开 http://localhost:8080。此操作只在本地提供网页，不会发布。
 
-修改源码后，运行以下命令即可重新生成独立网页：
-    node build-local.mjs
-输出文件位于 local-test/index.html。
+重新生成独立文件：npm run build:local
+运行自动检查：npm test
+完整关卡目录和开发验证说明请见 README.md。

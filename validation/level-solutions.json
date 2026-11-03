@@ -1,0 +1,705 @@
+{
+  "schemaVersion": 1,
+  "levels": {
+    "1": {
+      "solution": [
+        0
+      ],
+      "optimalMoves": 1,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 0,
+        "visited": 2,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "2": {
+      "solution": [
+        0,
+        1
+      ],
+      "optimalMoves": 2,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 1,
+        "visited": 3,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "3": {
+      "solution": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "optimalMoves": 4,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 3,
+        "visited": 11,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "4": {
+      "solution": [
+        0,
+        1,
+        2,
+        0,
+        2
+      ],
+      "optimalMoves": 5,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 4,
+        "visited": 20,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "5": {
+      "solution": [
+        0,
+        1,
+        2,
+        0,
+        3,
+        2,
+        3
+      ],
+      "optimalMoves": 7,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 6,
+        "visited": 125,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "6": {
+      "solution": [
+        0,
+        2,
+        4,
+        1,
+        3,
+        1,
+        3
+      ],
+      "optimalMoves": 7,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 6,
+        "visited": 1096,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "7": {
+      "solution": [
+        0,
+        1,
+        0,
+        1,
+        3,
+        5,
+        2,
+        4,
+        0,
+        2,
+        4
+      ],
+      "optimalMoves": 11,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 10,
+        "visited": 39802,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "8": {
+      "solution": [
+        0,
+        1,
+        0,
+        1,
+        2,
+        3,
+        1,
+        0,
+        3,
+        4,
+        1,
+        4
+      ],
+      "optimalMoves": 12,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 11,
+        "visited": 24275,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "9": {
+      "solution": [
+        0,
+        2,
+        0,
+        1,
+        3,
+        1,
+        5,
+        3,
+        4,
+        2,
+        4,
+        2,
+        5,
+        4,
+        5
+      ],
+      "optimalMoves": 15,
+      "optimalVerified": true,
+      "proof": {
+        "method": "Exact dyadic exhaustive DFS with weighted distance-cap bounds, unmet-goal bound, commuting-edge canonical ordering, and last-edge-aware exact-state cache",
+        "provedThrough": 14,
+        "visited": 110905,
+        "boundPrunes": 1481,
+        "cacheHits": 425,
+        "cachedStates": 4889,
+        "elapsedSeconds": 0.010099,
+        "timedOut": false,
+        "integerScale": 16384,
+        "coefficientDenominator": 420,
+        "solverSource": "tools/certify-final-levels.cpp",
+        "solverSha256": "fa9aec19caa629ea7698c108de3e09f0d2722db52614d89334e9a4f3dd0f2936",
+        "command": "/tmp/certify-final-levels 9 14 180",
+        "solver": "tools/certify-final-levels.cpp",
+        "excludedThrough": 14,
+        "stateDenominator": 16384,
+        "boundDenominator": 420,
+        "result": "validation/proofs/exact-9-14-v4.json"
+      },
+      "exactFinalPercentages": [
+        "225/16",
+        "5975/256",
+        "75/8",
+        "1225/64",
+        "8725/512",
+        "8725/512"
+      ]
+    },
+    "10": {
+      "solution": [
+        0,
+        2,
+        7,
+        2,
+        0,
+        1,
+        3,
+        1,
+        3,
+        2,
+        7,
+        8,
+        2,
+        7,
+        8,
+        2,
+        7,
+        8
+      ],
+      "optimalMoves": 18,
+      "optimalVerified": true,
+      "proof": {
+        "method": "Exact dyadic exhaustive DFS with weighted distance-cap bounds, unmet-goal bound, commuting-edge canonical ordering, and last-edge-aware exact-state cache",
+        "provedThrough": 17,
+        "visited": 745888292,
+        "boundPrunes": 13172751,
+        "cacheHits": 660469,
+        "cachedStates": 6000000,
+        "elapsedSeconds": 82.0107,
+        "timedOut": false,
+        "integerScale": 131072,
+        "coefficientDenominator": 420,
+        "solverSource": "tools/certify-final-levels.cpp",
+        "solverSha256": "fa9aec19caa629ea7698c108de3e09f0d2722db52614d89334e9a4f3dd0f2936",
+        "command": "/tmp/certify-final-levels 10 17 180",
+        "solver": "tools/certify-final-levels.cpp",
+        "excludedThrough": 17,
+        "stateDenominator": 131072,
+        "boundDenominator": 420,
+        "result": "validation/proofs/exact-10-17-v4.json",
+        "secondTraversal": {
+          "visited": 2461483460,
+          "elapsedSeconds": 161.906,
+          "result": "validation/proofs/exact-10-17-v3.json"
+        }
+      },
+      "exactFinalPercentages": [
+        "825/64",
+        "21575/1024",
+        "1375/128",
+        "9775/512",
+        "37075/2048",
+        "37075/2048",
+        "0"
+      ]
+    },
+    "11": {
+      "solution": [
+        0,
+        2,
+        0,
+        2
+      ],
+      "optimalMoves": 4,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 3,
+        "visited": 29,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "12": {
+      "solution": [
+        1,
+        3,
+        1,
+        3
+      ],
+      "optimalMoves": 4,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 3,
+        "visited": 19,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "13": {
+      "solution": [
+        3,
+        2,
+        3,
+        2
+      ],
+      "optimalMoves": 4,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 3,
+        "visited": 25,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "14": {
+      "solution": [
+        0,
+        1,
+        0,
+        2,
+        0,
+        3
+      ],
+      "optimalMoves": 6,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 5,
+        "visited": 65,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "15": {
+      "solution": [
+        0,
+        1,
+        0,
+        2
+      ],
+      "optimalMoves": 4,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 3,
+        "visited": 20,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "16": {
+      "solution": [
+        0,
+        2,
+        4,
+        0,
+        2,
+        4,
+        2
+      ],
+      "optimalMoves": 7,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 6,
+        "visited": 326,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "17": {
+      "solution": [
+        1,
+        3,
+        4,
+        1,
+        3,
+        5
+      ],
+      "optimalMoves": 6,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 5,
+        "visited": 203,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "18": {
+      "solution": [
+        5,
+        2,
+        3,
+        5,
+        2,
+        3
+      ],
+      "optimalMoves": 6,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 5,
+        "visited": 488,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "19": {
+      "solution": [
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1
+      ],
+      "optimalMoves": 8,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 7,
+        "visited": 76,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "20": {
+      "solution": [
+        0,
+        1,
+        4,
+        3,
+        4,
+        3
+      ],
+      "optimalMoves": 6,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 5,
+        "visited": 102,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "21": {
+      "solution": [
+        0,
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        4,
+        0,
+        4
+      ],
+      "optimalMoves": 10,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 9,
+        "visited": 5394,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "22": {
+      "solution": [
+        0,
+        1,
+        6,
+        0,
+        1,
+        0,
+        1,
+        6,
+        1
+      ],
+      "optimalMoves": 9,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 8,
+        "visited": 9417,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "23": {
+      "solution": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        2,
+        1,
+        4,
+        2,
+        5,
+        3
+      ],
+      "optimalMoves": 11,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 10,
+        "visited": 54437,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "24": {
+      "solution": [
+        0,
+        1,
+        3,
+        0,
+        2,
+        4,
+        0,
+        2,
+        4,
+        0,
+        1,
+        3
+      ],
+      "optimalMoves": 12,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 11,
+        "visited": 17460,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "25": {
+      "solution": [
+        1,
+        3,
+        4,
+        1,
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "optimalMoves": 9,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 8,
+        "visited": 7375,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "26": {
+      "solution": [
+        0,
+        2,
+        1,
+        0,
+        2,
+        3,
+        4,
+        1,
+        2,
+        0,
+        4,
+        2,
+        4
+      ],
+      "optimalMoves": 13,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 12,
+        "visited": 145112,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "27": {
+      "solution": [
+        0,
+        3,
+        5,
+        6,
+        0,
+        3,
+        5,
+        6,
+        0,
+        3,
+        6
+      ],
+      "optimalMoves": 11,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 10,
+        "visited": 119670,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "28": {
+      "solution": [
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2
+      ],
+      "optimalMoves": 15,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 14,
+        "visited": 1967,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "29": {
+      "solution": [
+        0,
+        1,
+        0,
+        1,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        1,
+        2,
+        1,
+        2,
+        1,
+        2
+      ],
+      "optimalMoves": 16,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 15,
+        "visited": 56953,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    },
+    "30": {
+      "solution": [
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3
+      ],
+      "optimalMoves": 19,
+      "optimalVerified": true,
+      "proof": {
+        "method": "exact dyadic iterative-deepening search",
+        "excludedThrough": 18,
+        "visited": 213184,
+        "solver": "tools/solve-levels.cpp",
+        "stateDenominator": 16777216
+      }
+    }
+  }
+}

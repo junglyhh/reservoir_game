@@ -1,0 +1,1418 @@
+[
+  {
+    "id": 11,
+    "name": "Two ways home",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Two routes lead to one patient flower.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 46,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 46,
+        "y": 76,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 87,
+        "y": 50,
+        "label": "A",
+        "goal": 29
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "hint": "A second route is an option, not an obligation.",
+    "hints": [
+      "A second route is an option, not an obligation.",
+      "A junction can gather light again after it shares."
+    ],
+    "discovery": "A short route may reward repeated sharing.",
+    "topology": "diamond"
+  },
+  {
+    "id": 12,
+    "name": "A quiet detour",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Choose where your light is most useful.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 41,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 41,
+        "y": 76,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 86,
+        "y": 76,
+        "label": "A",
+        "goal": 30
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "hint": "An extra corner can hold light you might need elsewhere.",
+    "hints": [
+      "An extra corner can hold light you might need elsewhere.",
+      "Compare each junction’s reserve before using a detour."
+    ],
+    "discovery": "Every detour changes where the reserve is stored.",
+    "topology": "triangle with tail"
+  },
+  {
+    "id": 13,
+    "name": "Corner to corner",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "The square has more than one rhythm.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 15,
+        "y": 20,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 84,
+        "y": 20,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 84,
+        "y": 76,
+        "label": "A",
+        "goal": 30
+      },
+      {
+        "id": "b",
+        "x": 15,
+        "y": 76,
+        "label": "B",
+        "goal": 22
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ]
+    ],
+    "hint": "A flower can share light as well as receive it.",
+    "hints": [
+      "A flower can share light as well as receive it.",
+      "The larger threshold deserves some extra room."
+    ],
+    "discovery": "A target can become a stepping stone.",
+    "topology": "square cycle"
+  },
+  {
+    "id": 14,
+    "name": "Three little lanterns",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Three different wishes meet at one fountain.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 42,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 82,
+        "y": 15,
+        "label": "A",
+        "goal": 20
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 50,
+        "label": "B",
+        "goal": 16
+      },
+      {
+        "id": "c",
+        "x": 79,
+        "y": 81,
+        "label": "C",
+        "goal": 12
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "hint": "The flowers need different amounts of light.",
+    "hints": [
+      "The flowers need different amounts of light.",
+      "A shared junction can be replenished between branches."
+    ],
+    "discovery": "Unequal needs can make the order matter.",
+    "topology": "three-leaf fountain"
+  },
+  {
+    "id": 15,
+    "name": "Open hands",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Share generously, but keep a little in reserve.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 48,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "a",
+        "x": 14,
+        "y": 18,
+        "label": "A",
+        "goal": 30
+      },
+      {
+        "id": "b",
+        "x": 85,
+        "y": 18,
+        "label": "B",
+        "goal": 20
+      },
+      {
+        "id": "c",
+        "x": 84,
+        "y": 77,
+        "label": "C",
+        "goal": 15
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "hint": "Every gift also changes the source.",
+    "hints": [
+      "Every gift also changes the source.",
+      "The source can receive light back from a fuller flower."
+    ],
+    "discovery": "Sharing works in both directions.",
+    "topology": "rooted three-arm star"
+  },
+  {
+    "id": 16,
+    "name": "Beyond the diamond",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "A distant flower waits beyond the meeting point.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 12,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 38,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 38,
+        "y": 76,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 64,
+        "y": 50,
+        "label": "A",
+        "goal": 20
+      },
+      {
+        "id": "b",
+        "x": 89,
+        "y": 50,
+        "label": "B",
+        "goal": 18
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "hint": "Both paths meet at a flower that also carries light onward.",
+    "hints": [
+      "Both paths meet at a flower that also carries light onward.",
+      "Sending light farther can lower a target you already reached."
+    ],
+    "discovery": "A shared destination needs its own reserve.",
+    "topology": "diamond with terminal tail"
+  },
+  {
+    "id": 17,
+    "name": "The garden bridge",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Carry enough light across the narrow crossing.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 20,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 13,
+        "y": 77,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 39,
+        "y": 50,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 64,
+        "y": 50,
+        "label": "K"
+      },
+      {
+        "id": "a",
+        "x": 88,
+        "y": 20,
+        "label": "A",
+        "goal": 12
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 77,
+        "label": "B",
+        "goal": 12
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "hint": "Only one connection carries light between the two sides.",
+    "hints": [
+      "Only one connection carries light between the two sides.",
+      "Light left on the starting side can still be useful later."
+    ],
+    "discovery": "A bridge makes preparation valuable.",
+    "topology": "two triangles joined by a bridge"
+  },
+  {
+    "id": 18,
+    "name": "Petal wings",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Two small loops open like a pair of wings.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 50,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 13,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 13,
+        "y": 77,
+        "label": "A",
+        "goal": 27
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 18,
+        "label": "B",
+        "goal": 18
+      },
+      {
+        "id": "c",
+        "x": 87,
+        "y": 77,
+        "label": "C",
+        "goal": 26
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "hint": "Each wing has its own local route.",
+    "hints": [
+      "Each wing has its own local route.",
+      "A central source must serve both sides of the garden."
+    ],
+    "discovery": "Local loops can share a common reserve.",
+    "topology": "two triangles sharing a center"
+  },
+  {
+    "id": 19,
+    "name": "The winding stream",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "The stream turns, and the light travels on.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 18,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 38,
+        "y": 76,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 63,
+        "y": 18,
+        "label": "A",
+        "goal": 22
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 76,
+        "label": "B",
+        "goal": 18
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "hint": "The near flower is also the final relay to the far one.",
+    "hints": [
+      "The near flower is also the final relay to the far one.",
+      "Refilling a relay may be more useful than an immediate delivery."
+    ],
+    "discovery": "Passing a target is different from finishing there.",
+    "topology": "four-vertex winding path"
+  },
+  {
+    "id": 20,
+    "name": "Five quiet corners",
+    "chapter": "New paths",
+    "difficulty": "Medium",
+    "subtitle": "Find a route around the five-cornered pond.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 39,
+        "y": 14,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 83,
+        "y": 27,
+        "label": "A",
+        "goal": 24
+      },
+      {
+        "id": "b",
+        "x": 83,
+        "y": 76,
+        "label": "B",
+        "goal": 15
+      },
+      {
+        "id": "j",
+        "x": 39,
+        "y": 84,
+        "label": "J"
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "hint": "The two directions around the pond have different lengths.",
+    "hints": [
+      "The two directions around the pond have different lengths.",
+      "Nearby flowers can help one another once they hold a reserve."
+    ],
+    "discovery": "Distance and remaining reserves both shape a route.",
+    "topology": "pentagonal cycle"
+  },
+  {
+    "id": 21,
+    "name": "A ring of promises",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "One entrance, three promises to keep.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 12,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 64,
+        "y": 17,
+        "label": "A",
+        "goal": 22
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 50,
+        "label": "B",
+        "goal": 15
+      },
+      {
+        "id": "c",
+        "x": 64,
+        "y": 79,
+        "label": "C",
+        "goal": 19
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "hint": "All fresh light must pass through the entrance junction.",
+    "hints": [
+      "All fresh light must pass through the entrance junction.",
+      "The ring can redistribute light already inside it."
+    ],
+    "discovery": "A loop can redistribute a limited supply.",
+    "topology": "square cycle behind a stem"
+  },
+  {
+    "id": 22,
+    "name": "The little ladder",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "Climb across the garden one connection at a time.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 18,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 50,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 87,
+        "y": 18,
+        "label": "A",
+        "goal": 24
+      },
+      {
+        "id": "j",
+        "x": 13,
+        "y": 76,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 50,
+        "y": 76,
+        "label": "K"
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 76,
+        "label": "B",
+        "goal": 20
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        5
+      ]
+    ],
+    "hint": "Rungs offer alternatives to staying on one rail.",
+    "hints": [
+      "Rungs offer alternatives to staying on one rail.",
+      "A shortcut is useful only when it carries enough light."
+    ],
+    "discovery": "More routes call for careful choices.",
+    "topology": "two-row ladder"
+  },
+  {
+    "id": 23,
+    "name": "The hidden chord",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "A quiet chord joins the two sides of the circle.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 36,
+        "y": 77,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 67,
+        "y": 18,
+        "label": "A",
+        "goal": 17
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 50,
+        "label": "B",
+        "goal": 14
+      },
+      {
+        "id": "c",
+        "x": 67,
+        "y": 77,
+        "label": "C",
+        "goal": 16
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "hint": "The chord moves light between supply routes.",
+    "hints": [
+      "The chord moves light between supply routes.",
+      "A flower with a surplus can support its neighbor."
+    ],
+    "discovery": "A cross-connection can change the balance of a loop.",
+    "topology": "hexagonal cycle with a junction chord"
+  },
+  {
+    "id": 24,
+    "name": "Two distant shores",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "Two faraway flowers share a single beginning.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 60,
+        "y": 18,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 60,
+        "y": 77,
+        "label": "K"
+      },
+      {
+        "id": "a",
+        "x": 88,
+        "y": 18,
+        "label": "A",
+        "goal": 15
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 77,
+        "label": "B",
+        "goal": 14
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "hint": "Both branches draw on the same upstream reserve.",
+    "hints": [
+      "Both branches draw on the same upstream reserve.",
+      "The last relay on a branch can be prepared before its delivery."
+    ],
+    "discovery": "A common source rewards planning across both branches.",
+    "topology": "fork with two long arms"
+  },
+  {
+    "id": 25,
+    "name": "Keep the hearth bright",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "Light the far side without forgetting home.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 20,
+        "label": "R"
+      },
+      {
+        "id": "a",
+        "x": 13,
+        "y": 77,
+        "label": "A",
+        "goal": 17
+      },
+      {
+        "id": "h",
+        "x": 39,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 64,
+        "y": 50,
+        "label": "J"
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 20,
+        "label": "B",
+        "goal": 14
+      },
+      {
+        "id": "c",
+        "x": 88,
+        "y": 77,
+        "label": "C",
+        "goal": 13
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "hint": "One flower stays on the source side of the bridge.",
+    "hints": [
+      "One flower stays on the source side of the bridge.",
+      "A local reserve may need protection while distant flowers grow."
+    ],
+    "discovery": "A long journey still needs a balanced starting place.",
+    "topology": "triangular islands with a home-side bloom"
+  },
+  {
+    "id": 26,
+    "name": "The twin fountains",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "Two fountains serve three different corners.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 18,
+        "label": "R"
+      },
+      {
+        "id": "a",
+        "x": 13,
+        "y": 77,
+        "label": "A",
+        "goal": 20
+      },
+      {
+        "id": "h",
+        "x": 39,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 64,
+        "y": 50,
+        "label": "J"
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 18,
+        "label": "B",
+        "goal": 13
+      },
+      {
+        "id": "c",
+        "x": 88,
+        "y": 77,
+        "label": "C",
+        "goal": 13
+      }
+    ],
+    "edges": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "hint": "The nearer bloom competes with the bridge for the same reserve.",
+    "hints": [
+      "The nearer bloom competes with the bridge for the same reserve.",
+      "The two distant flowers can be planned as a pair."
+    ],
+    "discovery": "Shared junctions connect otherwise separate needs.",
+    "topology": "two connected branching hubs"
+  },
+  {
+    "id": 27,
+    "name": "Braided currents",
+    "chapter": "Deeper waters",
+    "difficulty": "Hard",
+    "subtitle": "Several currents gather before the final fork.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 37,
+        "y": 18,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 37,
+        "y": 77,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 63,
+        "y": 50,
+        "label": "K"
+      },
+      {
+        "id": "a",
+        "x": 88,
+        "y": 18,
+        "label": "A",
+        "goal": 17
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 77,
+        "label": "B",
+        "goal": 16
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "hint": "The meeting point can receive light from either side.",
+    "hints": [
+      "The meeting point can receive light from either side.",
+      "More upstream connections do not mean every connection is needed."
+    ],
+    "discovery": "A rich network still benefits from a focused plan.",
+    "topology": "diamond with an extra chord and two terminal arms"
+  },
+  {
+    "id": 28,
+    "name": "Almost still",
+    "chapter": "The final garden",
+    "difficulty": "Master",
+    "subtitle": "Patience brings the stream close to balance.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 18,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 38,
+        "y": 76,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 63,
+        "y": 18,
+        "label": "A",
+        "goal": 24
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 76,
+        "label": "B",
+        "goal": 24
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "hint": "Small differences still carry useful light.",
+    "hints": [
+      "Small differences still carry useful light.",
+      "Late in the puzzle, a modest refill can matter greatly."
+    ],
+    "discovery": "A nearly balanced garden still holds possibilities.",
+    "topology": "high-threshold four-vertex path"
+  },
+  {
+    "id": 29,
+    "name": "The last few drops",
+    "chapter": "The final garden",
+    "difficulty": "Master",
+    "subtitle": "Give both flowers the last little share they need.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 48,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 86,
+        "y": 18,
+        "label": "A",
+        "goal": 25.5
+      },
+      {
+        "id": "b",
+        "x": 86,
+        "y": 77,
+        "label": "B",
+        "goal": 25.5
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "hint": "The flower targets are slightly above a perfectly even four-way split.",
+    "hints": [
+      "The flower targets are slightly above a perfectly even four-way split.",
+      "Balance can be temporary; choose which reserves to protect."
+    ],
+    "discovery": "Precision can grow from many gentle exchanges.",
+    "topology": "precision branching fountain"
+  },
+  {
+    "id": 30,
+    "name": "The long dawn",
+    "chapter": "The final garden",
+    "difficulty": "Master",
+    "subtitle": "Carry a generous share to the end of the stream.",
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 12,
+        "y": 15,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 31,
+        "y": 77,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 50,
+        "y": 15,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 69,
+        "y": 77,
+        "label": "K"
+      },
+      {
+        "id": "a",
+        "x": 88,
+        "y": 15,
+        "label": "A",
+        "goal": 17
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "hint": "Each relay holds part of the source’s original light.",
+    "hints": [
+      "Each relay holds part of the source’s original light.",
+      "The farthest flower may need a reserve built across several junctions."
+    ],
+    "discovery": "A distant goal can depend on the whole chain.",
+    "topology": "five-vertex winding path"
+  }
+]

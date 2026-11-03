@@ -1,0 +1,227 @@
+[
+  {
+    "id": 9,
+    "name": "Moonlit circle",
+    "chapter": "The moon garden",
+    "difficulty": "Hard",
+    "subtitle": "Let the blooms help one another.",
+    "budget": 17,
+    "par": 15,
+    "parVerified": false,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 20,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 36,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 67,
+        "y": 20,
+        "label": "A",
+        "goal": 19
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 50,
+        "label": "B",
+        "goal": 15
+      },
+      {
+        "id": "c",
+        "x": 67,
+        "y": 75,
+        "label": "C",
+        "goal": 17
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "hint": "A lit flower can pass some of its surplus to a neighbor.",
+    "hints": [
+      "A lit flower can pass some of its surplus to a neighbor.",
+      "Work around both sides of the circle; B can pass light onward to C.",
+      "Begin R\u2013H, H\u2013A, A\u2013B, H\u2013A. Keep returning to the two supply junctions."
+    ],
+    "discovery": "A target can also serve as a reservoir for a neighboring target.",
+    "solution": [
+      0,
+      2,
+      4,
+      2,
+      0,
+      1,
+      2,
+      3,
+      1,
+      3,
+      4,
+      2,
+      5,
+      4,
+      5
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Perfect harmony",
+    "chapter": "The moon garden",
+    "difficulty": "Master",
+    "subtitle": "Find the balance that brings the garden to life.",
+    "budget": 18,
+    "par": 18,
+    "parVerified": false,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 20,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 36,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 67,
+        "y": 20,
+        "label": "A",
+        "goal": 19
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 50,
+        "label": "B",
+        "goal": 18
+      },
+      {
+        "id": "c",
+        "x": 67,
+        "y": 75,
+        "label": "C",
+        "goal": 18
+      },
+      {
+        "id": "k",
+        "x": 59,
+        "y": 50,
+        "label": "K"
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "hint": "Extra connections are options. You do not need to use every pipe.",
+    "hints": [
+      "Extra connections are options. You do not need to use every pipe.",
+      "Store light at A, supply C from the other side, then balance through B.",
+      "Begin R\u2013H, H\u2013A, A\u2013B, H\u2013A. Later, repeat H\u2013A, A\u2013B, B\u2013C to share the final reserve."
+    ],
+    "discovery": "The whole distribution matters; leave unnecessary branches untouched.",
+    "solution": [
+      0,
+      2,
+      7,
+      2,
+      0,
+      1,
+      3,
+      1,
+      3,
+      2,
+      7,
+      8,
+      2,
+      7,
+      8,
+      2,
+      7,
+      8
+    ]
+  }
+]

@@ -1,0 +1,106 @@
+/* Thirty gardens, unlocked one at a time. */
+.level-track {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(44px, 1fr));
+  gap: 16px 8px;
+  align-items: center;
+}
+.level-track::before { display: none; }
+.level-step {
+  width: 44px;
+  height: 44px;
+  justify-self: center;
+  font-size: 11px;
+}
+.level-step::after { inset: 0; }
+.level-step.locked,
+.level-card.locked {
+  opacity: 1;
+  cursor: not-allowed;
+  color: var(--muted);
+  border-color: rgba(129, 153, 137, .42);
+  border-style: dashed;
+  background: #eeefe6;
+  transform: none;
+}
+.level-step.locked:hover,
+.level-card.locked:hover {
+  transform: none;
+  border-color: rgba(129, 153, 137, .42);
+}
+.step-lock {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  border-radius: 50%;
+  color: var(--muted);
+}
+.step-lock svg { width: 12px; height: 12px; }
+.level-card-lock {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--muted);
+}
+.level-card-lock svg { width: 15px; height: 15px; }
+.level-card.locked .level-mini { opacity: .35; }
+.level-card.locked .level-card-title,
+.level-card.locked .level-card-meta { color: var(--muted); }
+.level-card-meta { line-height: 1.5; }
+.completion-modal { width: min(620px, calc(100vw - 32px)); }
+.completion-modal .modal-intro { font-size: 14px; line-height: 1.8; }
+.completion-modal h2 { text-wrap: balance; }
+.completion-stats strong { color: var(--paper); }
+.completion-stats div:last-child strong { color: var(--goal-text); }
+#milestone-primary { min-height: 46px; max-width: 100%; white-space: normal; }
+.ultimate-challenge {
+  text-align: left;
+  padding: 20px;
+  margin: 0 0 26px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(77, 129, 107, .045);
+}
+.ultimate-challenge h3 {
+  font: 400 23px/1.35 var(--serif);
+  color: var(--paper);
+  margin: 0 0 12px;
+}
+.ultimate-challenge p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 10px 0;
+}
+.ultimate-challenge .math-equation {
+  margin: 18px 0;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.ultimate-challenge .math-equation span { display: block; font-size: 23px; }
+.ultimate-challenge .math-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 8px;
+}
+.ultimate-challenge .math-source svg { width: 16px; height: 16px; }
+@media (max-width: 700px) {
+  .level-track { grid-template-columns: repeat(5, minmax(44px, 1fr)); gap: 13px 8px; }
+  .completion-modal { width: calc(100vw - 24px); padding: 38px 22px 26px; }
+  .completion-modal .completion-flower { width: 64px; height: 64px; margin-bottom: 20px; }
+  .completion-modal .completion-flower svg { width: 34px; height: 40px; }
+  .completion-modal h2 { font-size: 29px; }
+  .completion-modal .modal-intro { font-size: 14px; }
+  .completion-stats { gap: 24px; padding: 18px 0; margin-bottom: 20px; }
+  .ultimate-challenge { padding: 16px; }
+  .ultimate-challenge h3 { font-size: 22px; }
+  .ultimate-challenge p { font-size: 14px; }
+}
