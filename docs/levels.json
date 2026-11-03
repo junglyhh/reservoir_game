@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "name": "First light",
+    "chapter": "Awakening",
+    "difficulty": "Easy",
+    "subtitle": "A single touch can awaken a bloom.",
+    "budget": 1,
+    "par": 1,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 26,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "a",
+        "x": 74,
+        "y": 50,
+        "label": "A",
+        "goal": 50
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ]
+    ],
+    "hint": "A pipe shares the total equally between its two ends.",
+    "hints": [
+      "A pipe shares the total equally between its two ends.",
+      "The source begins at 100%. Sharing with an empty vessel leaves 50% in each.",
+      "Tap the connection between R and A."
+    ],
+    "discovery": "Two connected vessels settle at their shared average.",
+    "solution": [
+      0
+    ]
+  },
+  {
+    "id": 2,
+    "name": "A small journey",
+    "chapter": "Awakening",
+    "difficulty": "Easy",
+    "subtitle": "Carry the light through the middle vessel.",
+    "budget": 3,
+    "par": 2,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 16,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 50,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 84,
+        "y": 50,
+        "label": "A",
+        "goal": 25
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "hint": "The middle vessel can carry your light onward.",
+    "hints": [
+      "The middle vessel can carry your light onward.",
+      "Fill H before sharing from H to A.",
+      "Begin with R\u2013H, then use H\u2013A."
+    ],
+    "discovery": "Light travels one connection at a time.",
+    "solution": [
+      0,
+      1
+    ]
+  },
+  {
+    "id": 3,
+    "name": "A second breath",
+    "chapter": "Awakening",
+    "difficulty": "Easy",
+    "subtitle": "Return to the source. Share a little more.",
+    "budget": 5,
+    "par": 4,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 16,
+        "y": 74,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 50,
+        "y": 26,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 84,
+        "y": 74,
+        "label": "A",
+        "goal": 30
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "hint": "You can use a pipe more than once.",
+    "hints": [
+      "You can use a pipe more than once.",
+      "After reaching A once, refill H from R.",
+      "Alternate R\u2013H and H\u2013A twice."
+    ],
+    "discovery": "A depleted junction can be refilled and used again.",
+    "solution": [
+      0,
+      1,
+      0,
+      1
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Two blooms",
+    "chapter": "Branching paths",
+    "difficulty": "Medium",
+    "subtitle": "Let two flowers shine together.",
+    "budget": 7,
+    "par": 5,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 16,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 48,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 81,
+        "y": 23,
+        "label": "A",
+        "goal": 20
+      },
+      {
+        "id": "b",
+        "x": 81,
+        "y": 75,
+        "label": "B",
+        "goal": 20
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "hint": "Both flowers must be above their lines at the same time.",
+    "hints": [
+      "Both flowers must be above their lines at the same time.",
+      "Give each branch some light, then replenish the shared junction.",
+      "Begin R\u2013H, H\u2013A, H\u2013B. Refill H before helping B again."
+    ],
+    "discovery": "Coordinate both targets instead of overfilling one.",
+    "solution": [
+      0,
+      1,
+      2,
+      0,
+      2
+    ]
+  },
+  {
+    "id": 5,
+    "name": "The far shore",
+    "chapter": "Branching paths",
+    "difficulty": "Medium",
+    "subtitle": "Save enough light for the distant bloom.",
+    "budget": 9,
+    "par": 7,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "a",
+        "x": 60,
+        "y": 22,
+        "label": "A",
+        "goal": 25
+      },
+      {
+        "id": "j",
+        "x": 60,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 75,
+        "label": "B",
+        "goal": 12
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "hint": "The farther bloom needs a relay; preserve the nearer bloom\u2019s supply.",
+    "hints": [
+      "The farther bloom needs a relay; preserve the nearer bloom\u2019s supply.",
+      "Bring A to its goal early, then work through junction J toward B.",
+      "Start R\u2013H, then H\u2013A. Send the remaining light toward J and refill H."
+    ],
+    "discovery": "Preserve one target while preparing a longer route to the other.",
+    "solution": [
+      0,
+      1,
+      2,
+      0,
+      3,
+      2,
+      3
+    ]
+  },
+  {
+    "id": 6,
+    "name": "A change of course",
+    "chapter": "Branching paths",
+    "difficulty": "Medium",
+    "subtitle": "A new connection invites a different route.",
+    "budget": 10,
+    "par": 7,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 40,
+        "y": 22,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 40,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 79,
+        "y": 22,
+        "label": "A",
+        "goal": 24
+      },
+      {
+        "id": "b",
+        "x": 79,
+        "y": 75,
+        "label": "B",
+        "goal": 18
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "hint": "The bridge between the junctions can move spare light to the other route.",
+    "hints": [
+      "The bridge between the junctions can move spare light to the other route.",
+      "A needs more light than B. Secure A before concentrating on B.",
+      "Begin R\u2013H, H\u2013A, H\u2013J. Then use R and J to refill B."
+    ],
+    "discovery": "Connections between junctions can redirect a useful reserve.",
+    "solution": [
+      0,
+      2,
+      4,
+      1,
+      3,
+      1,
+      3
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Across the water",
+    "chapter": "Shared light",
+    "difficulty": "Hard",
+    "subtitle": "Prepare the junctions before the last journey.",
+    "budget": 13,
+    "par": 11,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 50,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 60,
+        "y": 20,
+        "label": "J"
+      },
+      {
+        "id": "k",
+        "x": 60,
+        "y": 75,
+        "label": "K"
+      },
+      {
+        "id": "a",
+        "x": 87,
+        "y": 20,
+        "label": "A",
+        "goal": 15
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 75,
+        "label": "B",
+        "goal": 14
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "hint": "The last leg is easier when a junction already holds a generous reserve.",
+    "hints": [
+      "The last leg is easier when a junction already holds a generous reserve.",
+      "Build up J before lighting A, then move spare light toward K.",
+      "Begin R\u2013H, H\u2013J, R\u2013H, H\u2013J. Light A before sharing J with K."
+    ],
+    "discovery": "Prepare a branch before spending moves on its distant target.",
+    "solution": [
+      0,
+      1,
+      0,
+      1,
+      3,
+      5,
+      2,
+      0,
+      4,
+      2,
+      4
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Three wishes",
+    "chapter": "Shared light",
+    "difficulty": "Hard",
+    "subtitle": "Three flowers. One precious source.",
+    "budget": 15,
+    "par": 12,
+    "parVerified": true,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 44,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 35,
+        "y": 44,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 57,
+        "y": 44,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 79,
+        "y": 18,
+        "label": "A",
+        "goal": 14
+      },
+      {
+        "id": "b",
+        "x": 88,
+        "y": 50,
+        "label": "B",
+        "goal": 13
+      },
+      {
+        "id": "c",
+        "x": 73,
+        "y": 75,
+        "label": "C",
+        "goal": 12
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        5
+      ]
+    ],
+    "hint": "The three targets have different needs. Allocate a larger share to A first.",
+    "hints": [
+      "The three targets have different needs. Allocate a larger share to A first.",
+      "Build a reserve in J before opening any of its branches.",
+      "Begin R\u2013H, H\u2013J, R\u2013H, H\u2013J. Then share with A and B."
+    ],
+    "discovery": "Different quotas reward a deliberate order of sharing.",
+    "solution": [
+      0,
+      1,
+      0,
+      1,
+      2,
+      3,
+      1,
+      0,
+      3,
+      4,
+      1,
+      4
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Moonlit circle",
+    "chapter": "The moon garden",
+    "difficulty": "Hard",
+    "subtitle": "Let the blooms help one another.",
+    "budget": 17,
+    "par": 15,
+    "parVerified": false,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 20,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 36,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 67,
+        "y": 20,
+        "label": "A",
+        "goal": 19
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 50,
+        "label": "B",
+        "goal": 15
+      },
+      {
+        "id": "c",
+        "x": 67,
+        "y": 75,
+        "label": "C",
+        "goal": 17
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "hint": "A lit flower can pass some of its surplus to a neighbor.",
+    "hints": [
+      "A lit flower can pass some of its surplus to a neighbor.",
+      "Work around both sides of the circle; B can pass light onward to C.",
+      "Begin R\u2013H, H\u2013A, A\u2013B, H\u2013A. Keep returning to the two supply junctions."
+    ],
+    "discovery": "A target can also serve as a reservoir for a neighboring target.",
+    "solution": [
+      0,
+      2,
+      4,
+      2,
+      0,
+      1,
+      2,
+      3,
+      1,
+      3,
+      4,
+      2,
+      5,
+      4,
+      5
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Perfect harmony",
+    "chapter": "The moon garden",
+    "difficulty": "Master",
+    "subtitle": "Find the balance that brings the garden to life.",
+    "budget": 18,
+    "par": 18,
+    "parVerified": false,
+    "root": 0,
+    "nodes": [
+      {
+        "id": "r",
+        "x": 13,
+        "y": 50,
+        "label": "R"
+      },
+      {
+        "id": "h",
+        "x": 36,
+        "y": 20,
+        "label": "H"
+      },
+      {
+        "id": "j",
+        "x": 36,
+        "y": 75,
+        "label": "J"
+      },
+      {
+        "id": "a",
+        "x": 67,
+        "y": 20,
+        "label": "A",
+        "goal": 19
+      },
+      {
+        "id": "b",
+        "x": 87,
+        "y": 50,
+        "label": "B",
+        "goal": 18
+      },
+      {
+        "id": "c",
+        "x": 67,
+        "y": 75,
+        "label": "C",
+        "goal": 18
+      },
+      {
+        "id": "k",
+        "x": 59,
+        "y": 50,
+        "label": "K"
+      }
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "hint": "Extra connections are options. You do not need to use every pipe.",
+    "hints": [
+      "Extra connections are options. You do not need to use every pipe.",
+      "Store light at A, supply C from the other side, then balance through B.",
+      "Begin R\u2013H, H\u2013A, A\u2013B, H\u2013A. Later, repeat H\u2013A, A\u2013B, B\u2013C to share the final reserve."
+    ],
+    "discovery": "The whole distribution matters; leave unnecessary branches untouched.",
+    "solution": [
+      0,
+      2,
+      7,
+      2,
+      0,
+      1,
+      3,
+      1,
+      3,
+      2,
+      7,
+      8,
+      2,
+      7,
+      8,
+      2,
+      7,
+      8
+    ]
+  }
+]

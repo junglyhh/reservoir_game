@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1817">
+  <meta name="description" content="A quiet game of balance. Share luminous water across ten handcrafted puzzles, awaken every flower, and find a more elegant path.">
+  <title>Liquid Light — A quiet game of balance</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./mobile.css">
+  <script src="./app.js" type="module"></script>
+</head>
+<body>
+  <svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M12 21C4 17 3 9 4 5c5 0 8 3 8 9M12 21c8-4 9-12 8-16-5 0-8 3-8 9M12 20V3"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 3c2 2 2 6 0 8m3-11c4 4 4 10 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm5 4 5 6m0-6-5 6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4m0 3v.1"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M8 4 3 9l5 5M3 9h11a6 6 0 1 1 0 12"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></symbol>
+    <symbol id="i-hint" viewBox="0 0 24 24"><path d="M8 16c0-3-3-3-3-7a7 7 0 1 1 14 0c0 4-3 4-3 7H8Zm1 3h6m-5 3h4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h15l-4-4M20 16H5l4 4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+  </defs></svg>
+  <div class="ambient" aria-hidden="true"><div class="ambient-orb orb-one"></div><div class="ambient-orb orb-two"></div><div class="grain"></div></div>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Liquid Light home"><span class="brand-mark"><svg><use href="#i-leaf"/></svg></span><span>Liquid Light<span class="brand-tagline">A QUIET GAME OF BALANCE</span></span></a>
+      <div class="header-actions">
+        <span class="save-note" id="save-note"><span></span> Your garden is saved</span>
+        <button type="button" class="icon-button" id="sound-button" aria-label="Turn sound on" aria-pressed="false" title="Sound"><svg><use href="#i-muted"/></svg></button>
+        <button type="button" class="icon-button" id="help-button" aria-label="How to play" title="How to play"><svg><use href="#i-help"/></svg></button>
+      </div>
+    </header>
+
+    <main>
+      <div class="level-heading">
+        <div><p class="eyebrow"><span class="chapter-dot"></span><span id="level-eyebrow">A GARDEN IN TEN MOMENTS</span></p><h1 id="level-title">Let there be light.</h1><p class="level-description" id="level-description">One small gesture can bring a garden to life.</p></div>
+        <button type="button" class="text-button levels-open" id="levels-button"><svg><use href="#i-grid"/></svg>All 10 levels<span class="small-arrow">↗</span></button>
+      </div>
+
+      <div class="puzzle-layout">
+        <section class="game-panel" aria-label="Puzzle board">
+          <div class="board-topline"><span class="board-tag"><span></span>THE WATER GARDEN</span><span class="level-difficulty" id="difficulty-badge">EASY</span></div>
+          <div class="garden-board" id="garden-board">
+            <div class="garden-art" aria-hidden="true"></div>
+            <div class="water-rings" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="fireflies" id="fireflies" aria-hidden="true"></div>
+            <svg class="network" id="network" aria-hidden="true"></svg>
+            <div class="nodes-layer" id="nodes-layer"></div>
+            <div class="pipes-layer" id="pipes-layer"></div>
+            <div class="particles-layer" id="particles-layer" aria-hidden="true"></div>
+            <p class="loading-message" id="loading-message">Waking the garden…</p>
+          </div>
+          <div class="board-caption" id="board-caption"><span class="caption-icon">✦</span><span id="caption-text">Tap a connection. Let the light find its balance.</span><button type="button" id="next-level" class="next-button" hidden>Next garden<svg><use href="#i-arrow"/></svg></button></div>
+          <div class="board-toolbar"><div class="tool-actions"><button type="button" class="tool-button" id="undo-button" disabled><svg><use href="#i-undo"/></svg>Undo<span class="keycap">Z</span></button><button type="button" class="tool-button" id="restart-button"><svg><use href="#i-reset"/></svg>Restart<span class="keycap">R</span></button><button type="button" class="tool-button mobile-only" id="mobile-hint-button" aria-label="Open a hint"><svg><use href="#i-hint"/></svg>Hint</button></div><span class="conservation"><span class="mini-drop"></span><span id="total-light">100%</span> total light</span></div>
+        </section>
+
+        <aside class="level-summary" aria-label="Level objectives">
+          <div class="summary-top"><span class="eyebrow">YOUR OBJECTIVE</span><svg class="summary-flower"><use href="#i-leaf"/></svg></div>
+          <h2 id="objective-title">Awaken the bloom.</h2><p class="objective-copy" id="objective-copy">Bring every marked vessel to its target. Each connection shares its light equally.</p>
+          <div class="target-list" id="target-list"></div>
+          <div class="move-panel"><div class="move-label"><span class="eyebrow">MOVES USED</span><span class="move-number"><strong id="moves-used">0</strong><span> / </span><span id="moves-budget">1</span></span></div><div class="move-dots" id="move-dots" aria-hidden="true"></div><p class="par-copy" id="par-copy">An elegant solution: 1 move</p></div>
+          <div class="status-note" id="status-note" role="status" aria-live="polite"></div>
+          <button type="button" class="hint-button" id="hint-button" aria-expanded="false"><svg><use href="#i-hint"/></svg>A little nudge<span>+</span></button>
+          <div class="hint-box" id="hint-box" hidden><p id="hint-copy"></p><button type="button" class="hint-more" id="hint-more">Show a stronger hint <span>↗</span></button></div>
+          <div class="best-result" id="best-result" hidden></div>
+        </aside>
+      </div>
+
+      <nav class="journey" aria-label="Choose a level"><div class="journey-heading"><span class="eyebrow">YOUR JOURNEY</span><span id="journey-progress">0 of 10 gardens awakened</span></div><div class="level-track" id="level-track"></div><div class="journey-labels"><span>First light</span><span>Full bloom</span></div></nav>
+    </main>
+    <footer class="site-footer"><span>A little light goes a long way.</span><button type="button" id="math-button">The mathematics beneath the garden <span>↗</span></button></footer>
+  </div>
+
+  <dialog id="help-dialog" class="modal help-modal" aria-labelledby="help-title"><button type="button" class="modal-close icon-button" data-close aria-label="Close instructions"><svg><use href="#i-close"/></svg></button><p class="eyebrow">A MOMENT TO FIND YOUR BALANCE</p><h2 id="help-title">Small moves.<br>Beautiful possibilities.</h2><p class="modal-intro">One source of light. A connected garden. Every drop matters.</p><div class="instruction-list"><div><span>01</span><section><h3>Tap anywhere along a connection</h3><p>The two vessels share their light equally. The source gives up light too. A connection that is already balanced uses no move.</p></section></div><div><span>02</span><section><h3>Meet every target</h3><p>Bring all marked vessels to their goal at the same time, within the move limit. A lit flower can dim if you share its light again.</p></section></div><div><span>03</span><section><h3>Explore freely</h3><p>Undo restores your light and your move. Restart whenever you like. Aim for the elegant solution to earn a golden bloom.</p></section></div></div><button type="button" class="primary-button" data-close>Find my balance<svg><use href="#i-arrow"/></svg></button><p class="modal-footnote">Keyboard: Tab to a connection, Enter to share · Z to undo · R to restart</p></dialog>
+
+  <dialog id="hint-dialog" class="modal hint-modal" aria-labelledby="phone-hint-title"><button type="button" class="modal-close icon-button" data-close aria-label="Close hint"><svg><use href="#i-close"/></svg></button><p class="eyebrow">A LITTLE NUDGE</p><h2 id="phone-hint-title">A fresh perspective.</h2><p id="phone-hint-copy" class="modal-intro"></p><button type="button" class="hint-more" id="phone-hint-more">Show a stronger hint ↗</button><button type="button" class="primary-button" data-close>Back to the garden<svg><use href="#i-arrow"/></svg></button></dialog>
+
+  <dialog id="levels-dialog" class="modal levels-modal" aria-labelledby="levels-title"><button type="button" class="modal-close icon-button" data-close aria-label="Close level selection"><svg><use href="#i-close"/></svg></button><p class="eyebrow">TEN SMALL WORLDS. ONE BEAUTIFUL RULE.</p><h2 id="levels-title">A garden of possibilities.</h2><p class="modal-intro">Follow the path from easy to intricate, or explore any garden.</p><div class="level-grid" id="level-grid"></div></dialog>
+
+  <dialog id="math-dialog" class="modal math-modal" aria-labelledby="math-title"><button type="button" class="modal-close icon-button" data-close aria-label="Close mathematics"><svg><use href="#i-close"/></svg></button><p class="eyebrow">THE IDEA AT THE ROOT</p><h2 id="math-title">An elegant limit.</h2><p>Start with one unit of light at a source. Choose any connection and replace the amounts at its two ends with their average.</p><div class="math-equation">Maximum possible limit = <span>1 / (distance + 1)</span></div><p>A vessel two connections from the source can approach one third of the total light. Repeated averaging may approach this limit without ever reaching it exactly.</p><p>Our levels use reachable goals and finite move limits. Several goals must be met together, so their individual ceilings do not guarantee a shared solution.</p><a class="math-source" href="https://arxiv.org/abs/2405.15353" target="_blank" rel="noopener noreferrer">Explore “Sharing tea on a graph”<svg><use href="#i-arrow"/></svg></a></dialog>
+
+  <dialog id="completion-dialog" class="modal completion-modal" aria-labelledby="completion-title"><button type="button" class="modal-close icon-button" data-close aria-label="Close celebration"><svg><use href="#i-close"/></svg></button><div class="completion-flower" aria-hidden="true"><svg><use href="#i-leaf"/></svg></div><p class="eyebrow">TEN GARDENS, AWAKENED</p><h2 id="completion-title">Look what a little<br>light can do.</h2><p class="modal-intro">You brought the whole garden into bloom.</p><div class="completion-stats" id="completion-stats"></div><button type="button" class="primary-button" id="revisit-button">Revisit the gardens<svg><use href="#i-arrow"/></svg></button></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

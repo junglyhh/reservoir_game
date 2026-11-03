@@ -1,0 +1,9 @@
+{
+  "name": "reservoir-game",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test-game.mjs && node test-touch.mjs && node test-layout.mjs",
+    "dev": "python3 -m http.server 8080 --directory docs"
+  }
+}
