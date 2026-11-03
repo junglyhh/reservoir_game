@@ -1,9 +1,12 @@
 import { initialWeights, averageEdge, goalsMet, validateLevel } from './engine.js';
 import { installBoardTouch } from './touch.js';
 import { layoutGarden } from './layout.js';
+import { t, moveCount, translateLevel, getLanguage, setLanguage, applyStaticTranslations } from './i18n.js';
 
 const $ = id => document.getElementById(id);
-const storageKey = 'liquid-light-garden-v1';
+const storageKey = 'a-share-of-light-progress-v1';
+// Read the previous save key so returning players retain their progress.
+const legacyStorageKey = 'liquid-light-garden-v1';
 const svgNS = 'http://www.w3.org/2000/svg';
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const icons = name => '<svg aria-hidden="true"><use href="#i-' + name + '"/></svg>';
@@ -22,11 +25,13 @@ let soundEnabled = false;
 let audioContext;
 let storageAvailable = true;
 let toastTimer;
+let toastMessage;
+let loadFailed = false;
 let progress = { records: {}, current: 0, sound: false, active: null, celebrated: false };
 
 function readProgress() {
   try {
-    const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+    const stored = JSON.parse(localStorage.getItem(storageKey) ?? localStorage.getItem(legacyStorageKey) ?? 'null');
     if (stored && typeof stored === 'object') {
       progress.records = stored.records && typeof stored.records === 'object' ? stored.records : {};
       progress.current = Number.isInteger(stored.current) ? stored.current : 0;
@@ -44,7 +49,11 @@ function saveProgress() {
   progress.active = { level: current, weights, history, hintStep };
   try { localStorage.setItem(storageKey, JSON.stringify(progress)); }
   catch { storageAvailable = false; }
-  $('save-note').innerHTML = storageAvailable ? '<span></span>Your garden is saved' : '<span></span>Progress lasts for this visit';
+  renderSaveNote();
+}
+
+function renderSaveNote() {
+  $('save-note').innerHTML = '<span></span>' + t(storageAvailable ? 'save.saved' : 'save.session');
 }
 
 function format(value) {
@@ -69,11 +78,12 @@ function openDialog(id) {
   $(id).showModal();
 }
 
-function toast(message) {
+function toast(key, parameters = {}) {
   clearTimeout(toastTimer);
-  $('toast').textContent = message;
+  toastMessage = { key, parameters };
+  $('toast').textContent = t(key, parameters);
   $('toast').hidden = false;
-  toastTimer = setTimeout(() => { $('toast').hidden = true; }, 2800);
+  toastTimer = setTimeout(() => { $('toast').hidden = true; toastMessage = null; }, 2800);
 }
 
 function validResume(active, level) {
@@ -86,6 +96,43 @@ function validResume(active, level) {
     if (!level.edges.some(edge => averageEdge(snapshots[step], edge).every((value, index) => value === snapshots[step + 1][index]))) return false;
   }
   return true;
+}
+
+function renderLevelText() {
+  const level = translateLevel(levels[current]);
+  const targets = level.nodes.filter(node => node.goal !== undefined);
+  $('level-eyebrow').textContent = t('level.eyebrow', {
+    number: String(current + 1).padStart(2, '0'),
+    chapter: (level.chapter || t('level.defaultChapter')).toUpperCase()
+  });
+  $('level-title').textContent = level.name;
+  $('level-description').textContent = level.subtitle;
+  $('difficulty-badge').textContent = t('difficulty.' + level.difficulty).toUpperCase();
+  $('difficulty-badge').dataset.difficulty = level.difficulty.toLowerCase();
+  $('objective-title').textContent = t(targets.length === 1 ? 'objective.singleTitle' : targets.length === 2 ? 'objective.doubleTitle' : 'objective.multiTitle');
+  $('objective-copy').textContent = t(targets.length === 1 ? 'objective.single' : 'objective.multiple', { moves: moveCount(level.budget), count: targets.length });
+  $('par-copy').innerHTML = icons('star') + ' ' + t('par', { moves: moveCount(level.par) });
+  document.querySelectorAll('.target-row').forEach(row => {
+    const node = level.nodes[Number(row.dataset.target)];
+    row.querySelector('.target-name').textContent = t('target.name', { label: node.label });
+  });
+}
+
+function refreshLanguage() {
+  applyStaticTranslations();
+  updateSoundButton();
+  renderSaveNote();
+  if (levels[current]) {
+    renderLevelText();
+    render();
+    renderNavigation();
+    renderHint();
+    renderCompletionStats();
+    layoutBoard();
+  } else if (loadFailed) {
+    renderLoadError();
+  }
+  if (toastMessage) $('toast').textContent = t(toastMessage.key, toastMessage.parameters);
 }
 
 function loadLevel(index, resume = false) {
@@ -104,15 +151,6 @@ function loadLevel(index, resume = false) {
     hintStep = Number.isInteger(active.hintStep) ? Math.max(-1, Math.min(2, active.hintStep)) : -1;
   }
   if (goalsMet(level, weights)) recordVictory();
-  $('level-eyebrow').textContent = 'GARDEN ' + String(current + 1).padStart(2, '0') + ' / 10  ·  ' + (level.chapter || 'A journey into balance').toUpperCase();
-  $('level-title').textContent = level.name;
-  $('level-description').textContent = level.subtitle;
-  $('difficulty-badge').textContent = level.difficulty.toUpperCase();
-  $('difficulty-badge').dataset.difficulty = level.difficulty.toLowerCase();
-  const targets = level.nodes.filter(node => node.goal !== undefined);
-  $('objective-title').textContent = targets.length === 1 ? 'Awaken the bloom.' : targets.length === 2 ? 'Let both blooms glow.' : 'Bring every bloom to life.';
-  $('objective-copy').textContent = targets.length === 1 ? 'Bring the marked vessel to its target within ' + level.budget + ' ' + (level.budget === 1 ? 'move.' : 'moves.') : 'Meet all ' + (targets.length === 2 ? 'two' : targets.length) + ' targets at the same time, within ' + level.budget + ' moves.';
-  $('par-copy').innerHTML = icons('star') + ' An elegant solution: ' + level.par + ' ' + (level.par === 1 ? 'move' : 'moves');
   $('target-list').replaceChildren();
   level.nodes.forEach((node, index) => {
     if (node.goal === undefined) return;
@@ -120,11 +158,12 @@ function loadLevel(index, resume = false) {
     row.className = 'target-row';
     row.dataset.target = index;
     row.innerHTML = '<span class="target-symbol">' + icons('leaf') + '</span><div class="target-details"><div class="target-line"><span class="target-name"></span><span class="target-amount"></span></div><div class="target-bar"><span></span></div><span class="target-goal"></span></div>';
-    row.querySelector('.target-name').textContent = 'Bloom ' + node.label;
-    row.querySelector('.target-goal').textContent = 'Target ' + format(node.goal);
+    row.querySelector('.target-name').textContent = t('target.name', { label: node.label });
+    row.querySelector('.target-goal').textContent = t('target.minimum', { goal: format(node.goal) });
     row.querySelector('.target-goal').dataset.goal = format(node.goal);
     $('target-list').append(row);
   });
+  renderLevelText();
   $('move-dots').innerHTML = Array.from({ length: level.budget }, () => '<span></span>').join('');
   buildBoard();
   render();
@@ -146,8 +185,8 @@ function buildBoard() {
     el.dataset.node = index;
     el.setAttribute('role', 'img');
     el.innerHTML = '<div class="node-aura"></div>' + (target ? '<div class="petals" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>' : '') + '<div class="glass-vessel"><div class="liquid"><div class="liquid-surface"></div></div><div class="vessel-glint"></div><span class="node-value"></span>' + (target ? '<span class="goal-line" style="bottom:' + node.goal + '%"></span>' : '') + '</div><span class="node-label"></span><span class="node-goal"></span><span class="node-preview" hidden></span>';
-    el.querySelector('.node-label').textContent = index === level.root ? 'SOURCE ' + node.label : target ? 'BLOOM ' + node.label : node.label;
-    el.querySelector('.node-goal').textContent = target ? 'Goal ' + format(node.goal) : index === level.root ? 'The first drop' : 'Junction';
+    el.querySelector('.node-label').textContent = index === level.root ? t('node.source', { label: node.label }) : target ? t('node.bloom', { label: node.label }) : node.label;
+    el.querySelector('.node-goal').textContent = target ? t('node.minimum', { goal: format(node.goal) }) : t(index === level.root ? 'node.firstDrop' : 'node.junction');
     $('nodes-layer').append(el);
     return el;
   });
@@ -168,7 +207,7 @@ function buildBoard() {
     button.type = 'button';
     button.className = 'pipe-control';
     button.dataset.edge = index;
-    button.setAttribute('aria-label', 'Share light between ' + level.nodes[edge[0]].label + ' and ' + level.nodes[edge[1]].label);
+    button.setAttribute('aria-label', t('edge.share', { a: level.nodes[edge[0]].label, b: level.nodes[edge[1]].label }));
     button.innerHTML = '<span class="pipe-dot">' + icons('swap') + '</span>';
     button.addEventListener('click', () => takeMove(index));
     button.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') preview(index); });
@@ -243,12 +282,14 @@ function render() {
     el.classList.toggle('lit', lit);
     el.classList.toggle('high-fill', weights[index] >= 60);
     el.querySelector('.node-value').textContent = format(weights[index]);
-    el.querySelector('.node-goal').textContent = node.goal !== undefined ? (lit ? 'In bloom' : 'Goal ' + format(node.goal)) : index === level.root ? 'The first drop' : 'Junction';
-    el.setAttribute('aria-label', node.label + ': ' + format(weights[index]) + (node.goal !== undefined ? ', target ' + format(node.goal) + (lit ? ', goal met' : ', not yet met') : ''));
+    el.querySelector('.node-label').textContent = index === level.root ? t('node.source', { label: node.label }) : node.goal !== undefined ? t('node.bloom', { label: node.label }) : node.label;
+    el.querySelector('.node-goal').textContent = node.goal !== undefined ? t(lit ? 'node.reached' : 'node.minimum', { goal: format(node.goal) }) : t(index === level.root ? 'node.firstDrop' : 'node.junction');
+    el.setAttribute('aria-label', t('node.a11y', { label: node.label, amount: format(weights[index]) }) + (node.goal !== undefined ? t('node.goalA11y', { goal: format(node.goal), status: t(lit ? 'goal.met' : 'goal.unmet') }) : ''));
   });
   level.edges.forEach(([a, b], index) => {
     lineElements[index].style.setProperty('--pipe-light', 0.18 + 0.65 * Math.sqrt((weights[a] + weights[b]) / 200));
     pipeElements[index].disabled = busy || won || exhausted;
+    pipeElements[index].setAttribute('aria-label', t('edge.share', { a: level.nodes[a].label, b: level.nodes[b].label }));
   });
   document.querySelectorAll('.target-row').forEach(row => {
     const index = Number(row.dataset.target);
@@ -257,7 +298,7 @@ function render() {
     row.classList.toggle('met', met);
     row.querySelector('.target-amount').textContent = format(weights[index]);
     row.querySelector('.target-bar span').style.width = Math.min(100, weights[index] / goal * 100) + '%';
-    row.querySelector('.target-goal').textContent = met ? 'Target reached · ' + format(goal) : 'Target ' + format(goal);
+    row.querySelector('.target-goal').textContent = t(met ? 'target.reached' : 'target.minimum', { goal: format(goal) });
   });
   $('moves-used').textContent = history.length;
   $('moves-budget').textContent = level.budget;
@@ -266,22 +307,22 @@ function render() {
   $('restart-button').disabled = false;
   $('total-light').textContent = format(weights.reduce((sum, weight) => sum + weight, 0));
   $('next-level').hidden = !won;
-  $('next-level').innerHTML = (current === levels.length - 1 ? 'Explore the gardens' : 'Next garden') + icons('arrow');
+  $('next-level').innerHTML = t(current === levels.length - 1 ? 'next.explore' : 'next.garden') + icons('arrow');
   $('board-caption').className = 'board-caption' + (won ? ' win' : exhausted ? ' exhausted' : '');
   if (won) {
     const elegant = history.length <= level.par;
-    $('caption-text').textContent = elegant ? 'Beautifully balanced. A golden bloom earned.' : 'A little light, beautifully shared.';
-    $('status-note').innerHTML = icons(elegant ? 'star' : 'check') + '<span>Garden awakened in ' + history.length + ' ' + (history.length === 1 ? 'move.' : 'moves.') + '</span>';
+    $('caption-text').textContent = t(elegant ? 'caption.gold' : 'caption.won');
+    $('status-note').innerHTML = icons(elegant ? 'star' : 'check') + '<span>' + t('status.won', { moves: moveCount(history.length) }) + '</span>';
   } else if (exhausted) {
-    $('caption-text').textContent = 'A different order could change everything. Try undo.';
-    $('status-note').textContent = 'All moves used. Undo or restart to try another path.';
+    $('caption-text').textContent = t('caption.exhausted');
+    $('status-note').textContent = t('status.exhausted');
   } else {
-    $('caption-text').textContent = current === 0 && !history.length ? 'Tap the connection to share the light equally.' : 'Tap a connection. Let the light find its balance.';
-    $('status-note').textContent = history.length ? (level.budget - history.length) + ' ' + (level.budget - history.length === 1 ? 'move' : 'moves') + ' left. Every bloom must glow together.' : '';
+    $('caption-text').textContent = t(current === 0 && !history.length ? 'caption.first' : 'caption.play');
+    $('status-note').textContent = history.length ? t('status.remaining', { moves: moveCount(level.budget - history.length) }) : '';
   }
   const record = progress.records[level.id];
   $('best-result').hidden = !isRecord(record);
-  if (isRecord(record)) $('best-result').innerHTML = icons(record.moves <= level.par ? 'star' : 'check') + ' Your best: ' + record.moves + ' ' + (record.moves === 1 ? 'move' : 'moves');
+  if (isRecord(record)) $('best-result').innerHTML = icons(record.moves <= level.par ? 'star' : 'check') + ' ' + t('best', { moves: moveCount(record.moves) });
 }
 
 function preview(index) {
@@ -310,7 +351,7 @@ function takeMove(index) {
   const before = weights.slice();
   const [left, right] = level.edges[index];
   if (before[left] === before[right]) {
-    toast('Already balanced. No move used.');
+    toast('toast.balanced');
     return;
   }
   history.push(before);
@@ -411,6 +452,7 @@ function renderNavigation() {
   $('level-track').replaceChildren();
   $('level-grid').replaceChildren();
   levels.forEach((level, index) => {
+    const text = translateLevel(level);
     const record = progress.records[level.id];
     const complete = isRecord(record);
     const mastered = complete && record.moves <= level.par;
@@ -418,9 +460,9 @@ function renderNavigation() {
     const step = document.createElement('button');
     step.type = 'button';
     step.className = 'level-step' + classes;
-    step.setAttribute('aria-label', 'Level ' + (index + 1) + ': ' + level.name + ', ' + level.difficulty + (mastered ? ', golden bloom earned' : complete ? ', completed' : ''));
+    step.setAttribute('aria-label', t('nav.label', { number: index + 1, name: text.name, difficulty: t('difficulty.' + level.difficulty), status: mastered ? t('nav.mastered') : complete ? t('nav.complete') : '' }));
     if (index === current) step.setAttribute('aria-current', 'step');
-    step.title = level.name;
+    step.title = text.name;
     step.innerHTML = '<span>' + String(index + 1).padStart(2, '0') + '</span>' + (complete ? '<span class="step-flower">' + icons(mastered ? 'leaf' : 'check') + '</span>' : '');
     step.addEventListener('click', () => loadLevel(index));
     $('level-track').append(step);
@@ -428,24 +470,25 @@ function renderNavigation() {
     card.type = 'button';
     card.className = 'level-card' + classes;
     card.innerHTML = '<span class="level-card-number">' + String(index + 1).padStart(2, '0') + '</span>' + miniGraph(level) + '<span class="level-card-title"></span><span class="level-card-meta"></span>' + (complete ? '<span class="level-card-award">' + icons(mastered ? 'star' : 'check') + '</span>' : '');
-    card.querySelector('.level-card-title').textContent = level.name;
-    card.querySelector('.level-card-meta').textContent = level.difficulty + ' · ' + level.budget + ' ' + (level.budget === 1 ? 'move' : 'moves');
+    card.querySelector('.level-card-title').textContent = text.name;
+    card.querySelector('.level-card-meta').textContent = t('nav.meta', { difficulty: t('difficulty.' + level.difficulty), moves: moveCount(level.budget) });
+    card.setAttribute('aria-label', step.getAttribute('aria-label'));
     card.addEventListener('click', () => { closeDialogs(); loadLevel(index); });
     $('level-grid').append(card);
   });
   const count = completedCount();
-  $('journey-progress').textContent = count + ' of 10 gardens awakened';
+  $('journey-progress').textContent = t('journey.progress', { count });
 }
 
 function hintTexts() {
-  const level = levels[current];
+  const level = translateLevel(levels[current]);
   const hints = Array.isArray(level.hints) ? level.hints.slice(0, 2) : [level.hint];
-  if (!hints[0]) hints[0] = 'Look for the junction that can supply more than one bloom.';
+  if (!hints[0]) hints[0] = t('hint.first');
   if (!hints[1]) {
     const [a, b] = level.edges[level.solution[0]];
-    hints[1] = 'From the starting position, begin by sharing ' + level.nodes[a].label + ' with ' + level.nodes[b].label + '. Keep your next target in mind.';
+    hints[1] = t('hint.second', { a: level.nodes[a].label, b: level.nodes[b].label });
   }
-  hints[2] = 'One path from the starting position: ' + level.solution.map(edgeIndex => { const [a, b] = level.edges[edgeIndex]; return level.nodes[a].label + '–' + level.nodes[b].label; }).join(' → ') + '. Restart first if you want to follow it.';
+  hints[2] = t('hint.solution', { path: level.solution.map(edgeIndex => { const [a, b] = level.edges[edgeIndex]; return level.nodes[a].label + '–' + level.nodes[b].label; }).join(' → ') });
   return hints;
 }
 
@@ -458,21 +501,26 @@ function renderHint() {
   $('phone-hint-copy').textContent = hintTexts()[Math.max(0, hintStep)];
   $('hint-more').hidden = hintStep >= 2;
   $('phone-hint-more').hidden = hintStep >= 2;
-  $('hint-more').innerHTML = (hintStep === 1 ? 'Show one complete solution' : 'Show a stronger hint') + ' <span>↗</span>';
+  $('hint-more').innerHTML = t(hintStep === 1 ? 'hint.complete' : 'hint.stronger') + ' <span>↗</span>';
   $('phone-hint-more').innerHTML = $('hint-more').innerHTML;
 }
 
 function showCompletion() {
   progress.celebrated = true;
   saveProgress();
-  const gold = levels.filter(level => isRecord(progress.records[level.id]) && progress.records[level.id].moves <= level.par).length;
-  $('completion-stats').innerHTML = '<div><strong>10</strong><span>gardens awakened</span></div><div><strong>' + gold + '</strong><span>golden blooms</span></div>';
+  renderCompletionStats();
   openDialog('completion-dialog');
+}
+
+function renderCompletionStats() {
+  const gold = levels.filter(level => isRecord(progress.records[level.id]) && progress.records[level.id].moves <= level.par).length;
+  $('completion-stats').innerHTML = '<div><strong>10</strong><span>' + t('completion.gardens') + '</span></div><div><strong>' + gold + '</strong><span>' + t('completion.gold') + '</span></div>';
 }
 
 function updateSoundButton() {
   $('sound-button').innerHTML = icons(soundEnabled ? 'sound' : 'muted');
-  $('sound-button').setAttribute('aria-label', soundEnabled ? 'Turn sound off' : 'Turn sound on');
+  $('sound-button').setAttribute('aria-label', t(soundEnabled ? 'sound.off' : 'sound.on'));
+  $('sound-button').title = t(soundEnabled ? 'sound.off' : 'sound.on');
   $('sound-button').setAttribute('aria-pressed', String(soundEnabled));
 }
 
@@ -547,11 +595,20 @@ function addFireflies() {
 
 async function boot() {
   readProgress();
-  updateSoundButton();
+  refreshLanguage();
+  $('language-button').addEventListener('click', () => {
+    setLanguage(getLanguage() === 'en' ? 'zh' : 'en');
+    refreshLanguage();
+  });
   try {
-    const response = await fetch('./levels.json');
-    if (!response.ok) throw new Error('Unable to load level data');
-    const data = await response.json();
+    const embeddedData = $('level-data');
+    let data;
+    if (embeddedData) data = JSON.parse(embeddedData.textContent);
+    else {
+      const response = await fetch('./levels.json');
+      if (!response.ok) throw new Error('Unable to load level data');
+      data = await response.json();
+    }
     if (!Array.isArray(data) || data.length !== 10) throw new Error('Expected ten levels');
     data.forEach(level => { const errors = validateLevel(level); if (errors.length) throw new Error('Level ' + level.id + ': ' + errors.join(', ')); });
     levels = data;
@@ -561,11 +618,17 @@ async function boot() {
     addFireflies();
     loadLevel(Math.max(0, Math.min(levels.length - 1, progress.current)), true);
   } catch (error) {
-    $('loading-message').innerHTML = 'The garden needs a moment.<br><button type="button" class="tool-button" id="retry-load">Try again</button>';
-    $('retry-load').addEventListener('click', () => location.reload());
-    $('status-note').textContent = 'Please reload to bring the garden back.';
+    loadFailed = true;
+    renderLoadError();
     console.error(error);
   }
+}
+
+function renderLoadError() {
+  $('loading-message').hidden = false;
+  $('loading-message').innerHTML = t('load.error') + '<br><button type="button" class="tool-button" id="retry-load">' + t('load.retry') + '</button>';
+  $('retry-load').addEventListener('click', () => location.reload());
+  $('status-note').textContent = t('load.reload');
 }
 
 boot();

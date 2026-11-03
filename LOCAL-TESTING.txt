@@ -1,0 +1,55 @@
+A share of light / 流光花园 — LOCAL TESTING / 本地测试指南
+
+ENGLISH
+
+1. Open the downloaded a_share_of_light.html in a web browser.
+   If you have a repository checkout, run npm run build:local first,
+   then open the generated local-test/index.html. The standalone game
+   needs no installation, internet connection, or local server to play.
+2. Use the 中 / EN button at the top right to switch languages. Switching
+   language keeps your current puzzle and moves.
+3. Tap an edge to average the amounts at its two ends.
+4. Each marked target is a MINIMUM: current percentage >= required
+   percentage. Exceeding a target is allowed; exact equality is unnecessary.
+   All targets must meet their minimums together within the move limit.
+5. Progress is saved in your browser when local storage is available. A
+   private window or some file-viewer apps may not keep progress. Use an
+   actual web browser if your device only shows a static file preview.
+
+Source repository: https://github.com/junglyhh/reservoir_game
+GitHub Pages (once enabled): https://junglyhh.github.io/reservoir_game/
+
+Optional: serve the editable source from the project directory:
+    python3 -m http.server 8080 --directory docs
+Then open http://localhost:8080 in your browser.
+
+To rebuild the standalone file after editing the source:
+    node build-local.mjs
+The rebuilt file is local-test/index.html.
+
+中文
+
+1. 用浏览器打开下载的 a_share_of_light.html，即可开始游戏。
+   如果你使用的是仓库源码，请先运行 npm run build:local，
+   再打开生成的 local-test/index.html。独立网页无需安装、联网，
+   也无需启动本地服务器即可游玩。
+2. 点击第一行右侧的“中 / EN”按钮切换语言。切换语言会保留当前
+   关卡、光量和已用步数。
+3. 点击一条连线，两端水池的光量就会变成它们的平均值。
+4. 每个目标百分比都是最低要求：当前百分比 ≥ 目标百分比。
+   达到或超过目标都可以，不必恰好相等。必须在步数限制内，
+   让所有目标同时达标。
+5. 浏览器允许本地存储时，会自动保存进度。无痕窗口或部分文件
+   预览应用可能无法保存。若设备只显示静态预览，请在真正的
+   浏览器中打开文件。
+
+源码仓库：https://github.com/junglyhh/reservoir_game
+启用 GitHub Pages 后的游戏地址：https://junglyhh.github.io/reservoir_game/
+
+如需测试可编辑的源码，可在项目目录运行：
+    python3 -m http.server 8080 --directory docs
+然后在浏览器打开 http://localhost:8080。
+
+修改源码后，运行以下命令即可重新生成独立网页：
+    node build-local.mjs
+输出文件位于 local-test/index.html。

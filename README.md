@@ -1,6 +1,12 @@
-# Liquid Light · Reservoir Game
+# A share of light / 流光花园
 
 A quiet graph puzzle about sharing luminous water. Ten gardens progress from a single connection to several competing blooms. Every move replaces the amounts at the two ends of an edge with their average.
+
+Use the **中 / EN** switch on the right of the first header line to choose English or Simplified Chinese. Switching language keeps the current level, amounts, undo history, hints, and move count. Both languages cover all ten levels, instructions, hints, results, dialogs, and accessibility labels.
+
+Every marked target is a **minimum**: **current percentage ≥ target percentage**. Exceeding the target is allowed; exact equality is unnecessary. All goals must be satisfied together within the move limit. This rule appears beside the objectives and in the help dialog, and targets display **≥**.
+
+**流光花园**是一款宁静的图论解谜游戏。点击连线，将两端水池的光量平均分配，在十座花园中逐步挑战更精妙的布局。首行右侧的 **中 / EN** 按钮可切换语言，并保留当前关卡、光量、撤销记录、提示和步数。每个目标都是**下限**：**当前百分比 ≥ 目标百分比**即可，不必恰好相等；所有目标必须在步数限制内同时达标。
 
 ## Play on GitHub Pages
 
@@ -12,16 +18,18 @@ To enable hosting for this repository:
 2. Under **Build and deployment**, select **Deploy from a branch**.
 3. Select **`main`** and **`/docs`**, then **Save**.
 
-After GitHub finishes its deployment, the expected address is:
+The GitHub Pages address is:
 
 **https://junglyhh.github.io/reservoir_game/**
 
 This address becomes playable after Pages is enabled; pushing the source alone does not enable the repository's Pages setting. Subsequent changes to `main/docs` are published by GitHub Pages automatically.
 
+Source repository: **https://github.com/junglyhh/reservoir_game**.
+
 ## How to play
 
 - Tap anywhere along a pipe, or use its small central control. The connected vessels share their light equally.
-- Bring every marked bloom to its required amount **at the same time**, within the move limit.
+- Bring every marked bloom to **at least** its required percentage **at the same time**, within the move limit. Values above the target count; exact equality is not needed.
 - The source loses light too. Total light always remains 100%.
 - Undo restores both the state and the move. Restart is always available.
 - Tapping a connection whose endpoints are already equal uses no move.
@@ -56,9 +64,19 @@ Keyboard: **Tab** to a pipe control, **Enter/Space** to share, **Z** to undo, **
 | 9 | Moonlit circle | Hard | 17 | 15 |
 | 10 | Perfect harmony | Master | 18 | 18 |
 
-## Run locally
+## Play offline or run locally
 
-Serve `docs/` over HTTP; ES modules and level-data loading need a web server rather than a `file://` URL.
+Open the downloaded **`a_share_of_light.html`** in a web browser. It contains the complete game and does not need an installation, internet connection, or local server.
+
+To generate the same standalone game from a repository checkout, run:
+
+```sh
+npm run build:local
+```
+
+Then open **`local-test/index.html`** in a browser. No `npm install` is required. See `LOCAL-TESTING.txt` for testing instructions in both languages.
+
+To test the editable files in `docs/`, serve them over HTTP; their ES modules and level-data loading need a web server rather than a `file://` URL:
 
 ```sh
 python3 -m http.server 8080 --directory docs
@@ -74,18 +92,21 @@ With a modern Node.js installation:
 npm test
 ```
 
-No `npm install` is required. The tests verify all ten winning sequences, mass conservation and distance ceilings, immutable move history, gesture handling, and 70 responsive board configurations. Geometry checks are automated; they are not a substitute for visual testing on physical phones.
+No `npm install` is required. The tests verify all ten winning sequences, mass conservation and distance ceilings, immutable move history, gesture handling, 70 responsive board configurations, English/Chinese translation coverage, language preferences, and minimum-target behavior. Geometry checks are automated; they are not a substitute for visual testing on physical phones.
 
 ## Structure
 
 - `docs/index.html` — game interface and accessible dialogs
-- `docs/styles.css`, `docs/mobile.css` — visual design and phone layouts
+- `docs/styles.css`, `docs/mobile.css`, `docs/i18n.css` — visual design, phone layouts, and bilingual typography
 - `docs/app.js` — game state, hints, sound, and saved progress
 - `docs/engine.js` — averaging and goal validation
 - `docs/layout.js` — responsive graph geometry
 - `docs/touch.js` — broad edge hit areas and gesture recognition
 - `docs/levels.json` — all ten levels and solution certificates
-- `test-game.mjs`, `test-touch.mjs`, `test-layout.mjs` — automated checks
+- `docs/i18n.js`, `docs/i18n-static.js`, `docs/i18n-levels.js` — language switching and complete English/Chinese interface and level text
+- `build-local.mjs` — creates the self-contained offline HTML game
+- `LOCAL-TESTING.txt` — English and Chinese testing instructions
+- `test-game.mjs`, `test-touch.mjs`, `test-layout.mjs`, `test-i18n.mjs` — automated checks
 - `level-validation.json` — level search and replay results
 
 ## Mathematical foundation
