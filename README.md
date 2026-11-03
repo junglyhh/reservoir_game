@@ -2,11 +2,15 @@
 
 A quiet graph puzzle about sharing luminous water. Ten gardens progress from a single connection to several competing blooms. Every move replaces the amounts at the two ends of an edge with their average.
 
+The default **Morning Garden / 晨光花园** theme uses warm ivory backgrounds, sage-green glass and controls, mint water, and amber blooms. Dark text keeps the interface readable across the board, dialogs, and phone layouts.
+
 Use the **中 / EN** switch on the right of the first header line to choose English or Simplified Chinese. Switching language keeps the current level, amounts, undo history, hints, and move count. Both languages cover all ten levels, instructions, hints, results, dialogs, and accessibility labels.
 
 Every marked target is a **minimum**: **current percentage ≥ target percentage**. Exceeding the target is allowed; exact equality is unnecessary. All goals must be satisfied together within the move limit. This rule appears beside the objectives and in the help dialog, and targets display **≥**.
 
 **流光花园**是一款宁静的图论解谜游戏。点击连线，将两端水池的光量平均分配，在十座花园中逐步挑战更精妙的布局。首行右侧的 **中 / EN** 按钮可切换语言，并保留当前关卡、光量、撤销记录、提示和步数。每个目标都是**下限**：**当前百分比 ≥ 目标百分比**即可，不必恰好相等；所有目标必须在步数限制内同时达标。
+
+默认采用**晨光花园**配色：暖象牙白背景、鼠尾草绿玻璃与按钮、薄荷色水面，以及琥珀色花朵。棋盘、弹窗和手机界面均使用清晰的深色文字。
 
 ## Play on GitHub Pages
 
@@ -98,6 +102,7 @@ No `npm install` is required. The tests verify all ten winning sequences, mass c
 
 - `docs/index.html` — game interface and accessible dialogs
 - `docs/styles.css`, `docs/mobile.css`, `docs/i18n.css` — visual design, phone layouts, and bilingual typography
+- `docs/morning-garden.css` — Morning Garden palette, glass treatment, and readable interaction states
 - `docs/app.js` — game state, hints, sound, and saved progress
 - `docs/engine.js` — averaging and goal validation
 - `docs/layout.js` — responsive graph geometry

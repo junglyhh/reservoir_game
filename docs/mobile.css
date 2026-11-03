@@ -24,7 +24,7 @@
   .level-heading > div { min-width: 0; }
   .level-heading .eyebrow { font-size: 9px; letter-spacing: .9px; line-height: 1.3; gap: 5px; }
   .level-heading h1 { font-size: 28px; line-height: 1.1; letter-spacing: -.6px; margin: 5px 0 3px; }
-  .level-description { font-size: 11px; line-height: 1.4; max-width: none; color: #b1c3b2; }
+  .level-description { font-size: 11px; line-height: 1.4; max-width: none; color: #4e705c; }
   .level-heading .levels-open {
     display: grid; place-items: center; width: 44px; height: 44px;
     min-width: 44px; min-height: 44px; margin: 0; padding: 0;
@@ -42,9 +42,9 @@
     gap: 9px;
     margin: 0;
     padding: 8px 10px;
-    border: 1px solid rgba(183, 219, 188, .13);
+    border: 1px solid rgba(72,103,85, .13);
     border-radius: 9px;
-    background: rgba(22, 46, 35, .45);
+    background: rgba(236,238,231, .45);
     position: relative;
   }
   .summary-top, .level-summary h2, .objective-copy,
@@ -59,21 +59,21 @@
   .target-symbol { display: none; }
   .target-details { min-width: 0; }
   .target-line { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
-  .target-line .target-name { font-size: 11px; line-height: 1.25; color: #c6d8bc; white-space: nowrap; }
-  .target-line .target-amount { font-size: 15px; line-height: 1.4; color: #eef4d9; letter-spacing: -.3px; }
+  .target-line .target-name { font-size: 11px; line-height: 1.25; color: #476654; white-space: nowrap; }
+  .target-line .target-amount { font-size: 15px; line-height: 1.4; color: #3b5545; letter-spacing: -.3px; }
   .target-bar { height: 3px; margin-top: 2px; }
-  .target-goal { font-size: 11px; line-height: 1.2; margin-top: 3px; color: #b0c5a1; }
+  .target-goal { font-size: 11px; line-height: 1.2; margin-top: 3px; color: #517560; }
   .target-goal[data-goal] { font-size: 0; }
   .target-goal[data-goal]::before { content: 'Goal ' attr(data-goal); font-size: 11px; line-height: 1.2; white-space: nowrap; }
-  .target-row.met .target-goal[data-goal]::before { content: '✓ ' attr(data-goal); color: #d7edb6; }
-  .target-row.met .target-line .target-amount { color: #d7edb6; }
+  .target-row.met .target-goal[data-goal]::before { content: '✓ ' attr(data-goal); color: #446250; }
+  .target-row.met .target-line .target-amount { color: #446250; }
   .move-panel {
     grid-column: 2; grid-row: 1;
     margin: 0; padding: 4px 0 4px 9px;
     border-top: 0; border-left: 1px solid var(--line);
   }
   .move-label { flex-direction: column; justify-content: center; gap: 6px; }
-  .move-label .eyebrow { font-size: 8px; letter-spacing: .5px; white-space: nowrap; color: #adc0ab; }
+  .move-label .eyebrow { font-size: 8px; letter-spacing: .5px; white-space: nowrap; color: #50735f; }
   .move-number { white-space: nowrap; font-size: 13px; line-height: 1; }
   .move-number strong { font-size: 25px; margin-right: 0; }
   .move-number span:last-child { font-size: 13px; margin-left: 0; }
@@ -98,7 +98,7 @@
   .node-value { font-size: 12px; }
   .compact-nodes .node-value { font-size: 11px; }
   .node-label { font-size: 10px; letter-spacing: .35px; top: calc(100% + 10px); }
-  .node-goal { font-size: 11px; line-height: 1.2; top: calc(100% + 24px); color: #b6c9a8; }
+  .node-goal { font-size: 11px; line-height: 1.2; top: calc(100% + 24px); color: #4f715d; }
   .node-preview { font-size: 11px; }
   .pipe-control { width: 48px; height: 48px; min-width: 48px; min-height: 48px; touch-action: manipulation; }
   .pipe-dot { width: 23px; height: 23px; }
@@ -130,7 +130,7 @@
   .site-footer button span { margin-left: 2px; }
 
   .modal { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); padding: 38px 24px 26px; }
-  .modal::backdrop { backdrop-filter: none; background: rgba(3, 13, 11, .88); }
+  .modal::backdrop { backdrop-filter: none; background: rgba(250,249,246, .88); }
   .modal .modal-close { min-width: 44px; min-height: 44px; right: 6px; top: 6px; }
   .modal h2 { font-size: 30px; }
   .modal-intro, .instruction-list p, .math-modal > p:not(.eyebrow) { font-size: 13px; line-height: 1.65; }
@@ -147,8 +147,8 @@
   /* The garden remains luminous while expensive full-screen effects stay quiet. */
   .ambient-orb, .grain { display: none; }
   .fireflies > :nth-child(n + 9) { display: none; }
-  .firefly { animation-duration: 12s; box-shadow: 0 0 5px #bce59240; }
-  .transfer-particle { box-shadow: 0 0 6px #c5f6a580; }
+  .firefly { animation-duration: 12s; box-shadow: 0 0 5px #4d6f5c40; }
+  .transfer-particle { box-shadow: 0 0 6px #46645280; }
   .toast { bottom: max(12px, env(safe-area-inset-bottom, 0px)); font-size: 12px; }
 }
 

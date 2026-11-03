@@ -177,7 +177,7 @@ function buildBoard() {
   $('nodes-layer').replaceChildren();
   $('pipes-layer').replaceChildren();
   $('particles-layer').replaceChildren();
-  $('network').innerHTML = '<defs><linearGradient id="pipe-gradient"><stop offset="0%" stop-color="#76c8ac"/><stop offset="50%" stop-color="#d7edb3"/><stop offset="100%" stop-color="#76c8ac"/></linearGradient><filter id="light-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter></defs>';
+  $('network').innerHTML = '<defs><linearGradient id="pipe-gradient"><stop offset="0%" stop-color="#71a587"/><stop offset="50%" stop-color="#1e6146"/><stop offset="100%" stop-color="#71a587"/></linearGradient><filter id="light-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter></defs>';
   nodeElements = level.nodes.map((node, index) => {
     const el = document.createElement('div');
     const target = node.goal !== undefined;

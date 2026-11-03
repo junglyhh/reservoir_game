@@ -14,10 +14,10 @@
   min-height: 44px;
   height: 44px;
   padding: 5px 7px;
-  border: 1px solid rgba(183, 219, 188, .25);
+  border: 1px solid rgba(72,103,85, .25);
   border-radius: 24px;
-  background: rgba(183, 219, 188, .04);
-  color: #93aa96;
+  background: rgba(72,103,85, .04);
+  color: #5a826b;
   font: 500 12px/1 var(--sans);
   touch-action: manipulation;
 }
@@ -32,26 +32,26 @@
   transition: background .18s, color .18s;
 }
 .language-toggle .language-zh { font-size: 13px; }
-.language-divider { color: #597761; font-weight: 400; }
+.language-divider { color: #6a977c; font-weight: 400; }
 html[lang="en"] .language-en,
 html[lang^="zh"] .language-zh {
-  background: #c5e5b1;
-  color: #1d3b28;
+  background: #476654;
+  color: #e8eae1;
 }
-.language-toggle:hover { border-color: #abcda2; background: rgba(183, 219, 188, .08); }
+.language-toggle:hover { border-color: #4f725e; background: rgba(72,103,85, .08); }
 .threshold-note {
   grid-column: 1;
   margin-top: 13px;
   padding: 9px 10px;
-  border-left: 2px solid #b0d793;
+  border-left: 2px solid #50735f;
   border-radius: 0 6px 6px 0;
-  background: rgba(157, 196, 123, .07);
-  color: #bacead;
+  background: rgba(90,129,106, .07);
+  color: #4d6e5b;
   font-size: 11px;
   line-height: 1.6;
 }
-.threshold-note strong { color: #e0edc9; font-weight: 600; }
-.threshold-instruction strong { color: #d8e9c3; font-weight: 600; }
+.threshold-note strong { color: #405c4b; font-weight: 600; }
+.threshold-instruction strong { color: #425f4e; font-weight: 600; }
 .threshold-note + .target-list { margin-top: 20px; }
 html[lang^="zh"] {
   --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", "Segoe UI", sans-serif;
