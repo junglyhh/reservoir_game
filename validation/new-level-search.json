@@ -282,30 +282,6 @@
     ],
     "seconds": 0.012
   },
-  "28": {
-    "optimalVerified": true,
-    "optimalMoves": 15,
-    "provedThrough": 14,
-    "visited": 1967,
-    "solution": [
-      0,
-      1,
-      2,
-      1,
-      0,
-      1,
-      2,
-      1,
-      0,
-      1,
-      2,
-      1,
-      0,
-      1,
-      2
-    ],
-    "seconds": 0.003
-  },
   "29": {
     "optimalVerified": true,
     "optimalMoves": 16,
@@ -358,5 +334,29 @@
       3
     ],
     "seconds": 0.024
+  },
+  "31": {
+    "optimalVerified": true,
+    "optimalMoves": 15,
+    "provedThrough": 14,
+    "visited": 676508,
+    "solution": [
+      0,
+      3,
+      0,
+      3,
+      1,
+      0,
+      1,
+      4,
+      0,
+      1,
+      4,
+      0,
+      1,
+      2,
+      4
+    ],
+    "seconds": 0.091
   }
 }

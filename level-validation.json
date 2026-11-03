@@ -10,11 +10,20 @@
   "maximumBlooms": 3,
   "allOptimaVerified": true,
   "replayMoves": 262,
-  "responsiveConfigurations": 210,
-  "touchTestGroups": 8,
+  "responsiveConfigurations": 300,
+  "bilingualLabelConfigurations": 600,
+  "touchTestGroups": 10,
   "localizationTestGroups": 9,
-  "progressionTestGroups": 9,
+  "progressionTestGroups": 10,
   "certificates": "validation/level-solutions.json",
   "catalog": "validation/campaign-catalog.json",
+  "replacementLevel27": {
+    "stableId": 31,
+    "topology": "bull graph",
+    "minimumMoves": 15,
+    "independentProof": "validation/proofs/bull-level27.json",
+    "previewCheck": "npm run test:preview"
+  },
+  "targetAppearance": "persistent six-petal frames; sage reached state; gold reserved for optimal clears",
   "deploymentTarget": "GitHub Pages"
 }

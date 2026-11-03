@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "optimalVerified": true,
+  "optimalMoves": 15,
+  "everyEdgeNecessaryWithinBudget": true,
+  "method": "exhaustive breadth-first search with exact dyadic arithmetic; no heuristic pruning",
+  "stateDenominator": 32768,
+  "nodeLabels": [
+    "R",
+    "H",
+    "J",
+    "A",
+    "B"
+  ],
+  "root": 0,
+  "edges": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "goalsPercent": {
+    "A": 24,
+    "B": 19
+  },
+  "fullGraph": {
+    "firstWinningDepth": 15,
+    "excludedThrough": 14,
+    "reachableStateSpaceExhausted": false,
+    "uniqueStatesStored": 568317,
+    "inspectedNontrivialTransitions": 2067233,
+    "uniqueNewStatesAtDepth": [
+      1,
+      1,
+      2,
+      6,
+      16,
+      44,
+      117,
+      316,
+      864,
+      2343,
+      6412,
+      17574,
+      48055,
+      131645,
+      360921
+    ],
+    "seconds": 0.187775
+  },
+  "edgeRemovalChecks": [
+    {
+      "removedEdgeIndex": 0,
+      "search": {
+        "firstWinningDepth": null,
+        "excludedThrough": 15,
+        "reachableStateSpaceExhausted": true,
+        "uniqueStatesStored": 1,
+        "inspectedNontrivialTransitions": 0,
+        "uniqueNewStatesAtDepth": [
+          1,
+          0
+        ],
+        "seconds": 0.000116717
+      }
+    },
+    {
+      "removedEdgeIndex": 1,
+      "search": {
+        "firstWinningDepth": null,
+        "excludedThrough": 15,
+        "reachableStateSpaceExhausted": false,
+        "uniqueStatesStored": 5471,
+        "inspectedNontrivialTransitions": 14886,
+        "uniqueNewStatesAtDepth": [
+          1,
+          1,
+          1,
+          2,
+          4,
+          8,
+          15,
+          29,
+          55,
+          104,
+          198,
+          373,
+          713,
+          1359,
+          2608
+        ],
+        "seconds": 0.0003114
+      }
+    },
+    {
+      "removedEdgeIndex": 2,
+      "search": {
+        "firstWinningDepth": null,
+        "excludedThrough": 15,
+        "reachableStateSpaceExhausted": false,
+        "uniqueStatesStored": 115699,
+        "inspectedNontrivialTransitions": 329428,
+        "uniqueNewStatesAtDepth": [
+          1,
+          1,
+          2,
+          5,
+          12,
+          28,
+          66,
+          158,
+          373,
+          884,
+          2101,
+          4990,
+          11854,
+          28173,
+          67051
+        ],
+        "seconds": 0.00968978
+      }
+    },
+    {
+      "removedEdgeIndex": 3,
+      "search": {
+        "firstWinningDepth": null,
+        "excludedThrough": 15,
+        "reachableStateSpaceExhausted": false,
+        "uniqueStatesStored": 67227,
+        "inspectedNontrivialTransitions": 191374,
+        "uniqueNewStatesAtDepth": [
+          1,
+          1,
+          1,
+          3,
+          7,
+          17,
+          38,
+          91,
+          215,
+          511,
+          1218,
+          2895,
+          6882,
+          16344,
+          39003
+        ],
+        "seconds": 0.00259168
+      }
+    },
+    {
+      "removedEdgeIndex": 4,
+      "search": {
+        "firstWinningDepth": null,
+        "excludedThrough": 15,
+        "reachableStateSpaceExhausted": false,
+        "uniqueStatesStored": 21508,
+        "inspectedNontrivialTransitions": 64261,
+        "uniqueNewStatesAtDepth": [
+          1,
+          1,
+          2,
+          5,
+          10,
+          22,
+          42,
+          83,
+          166,
+          333,
+          668,
+          1338,
+          2684,
+          5375,
+          10778
+        ],
+        "seconds": 0.00156827
+      }
+    }
+  ],
+  "witness": [
+    0,
+    3,
+    0,
+    3,
+    1,
+    0,
+    1,
+    4,
+    0,
+    1,
+    4,
+    0,
+    1,
+    2,
+    4
+  ],
+  "witnessStates": [
+    [
+      32768,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      16384,
+      16384,
+      0,
+      0,
+      0
+    ],
+    [
+      16384,
+      8192,
+      0,
+      8192,
+      0
+    ],
+    [
+      12288,
+      12288,
+      0,
+      8192,
+      0
+    ],
+    [
+      12288,
+      10240,
+      0,
+      10240,
+      0
+    ],
+    [
+      12288,
+      5120,
+      5120,
+      10240,
+      0
+    ],
+    [
+      8704,
+      8704,
+      5120,
+      10240,
+      0
+    ],
+    [
+      8704,
+      6912,
+      6912,
+      10240,
+      0
+    ],
+    [
+      8704,
+      6912,
+      3456,
+      10240,
+      3456
+    ],
+    [
+      7808,
+      7808,
+      3456,
+      10240,
+      3456
+    ],
+    [
+      7808,
+      5632,
+      5632,
+      10240,
+      3456
+    ],
+    [
+      7808,
+      5632,
+      4544,
+      10240,
+      4544
+    ],
+    [
+      6720,
+      6720,
+      4544,
+      10240,
+      4544
+    ],
+    [
+      6720,
+      5632,
+      5632,
+      10240,
+      4544
+    ],
+    [
+      6720,
+      5632,
+      7936,
+      7936,
+      4544
+    ],
+    [
+      6720,
+      5632,
+      6240,
+      7936,
+      6240
+    ]
+  ],
+  "finalExactPercentages": {
+    "R": {
+      "numerator": 2625,
+      "denominator": 128
+    },
+    "H": {
+      "numerator": 275,
+      "denominator": 16
+    },
+    "J": {
+      "numerator": 4875,
+      "denominator": 256
+    },
+    "A": {
+      "numerator": 775,
+      "denominator": 32
+    },
+    "B": {
+      "numerator": 4875,
+      "denominator": 256
+    }
+  },
+  "campaignPosition": 27,
+  "stableId": 31,
+  "retiredStableId": 28,
+  "solver": "tools/certify-bull-level.cpp"
+}

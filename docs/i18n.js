@@ -1,5 +1,5 @@
 import { staticMessages } from './i18n-static.js';
-import { levelTranslations } from './i18n-levels.js';
+import { levelTranslations } from './i18n-levels.js?v=petal-bull-1';
 
 const languageStorageKey = 'a-share-of-light-language-v1';
 // Keep this read-only fallback for language choices saved before the rename.

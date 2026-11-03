@@ -90,3 +90,39 @@ Earlier weaker versions of the exact search independently completed the same
 exclusions: level 9 visited 293,521 states; level 10 version 3 visited
 2,461,483,460 states. Their logs remain alongside the final proof results.
 The exploratory MILP runs timed out and are not used as certificates.
+
+## Bull-graph replacement at campaign position 27
+
+The replacement **The horned garden / 双角花庭** has stable ID31, replacing
+the retired ID28 puzzle. It uses the five-vertex bull graph, with source R,
+triangle H–J–A, and pendant leaves R at H and B at J. Its targets are
+A ≥ 24% and B ≥ 19%, simultaneously. The minimum and move limit are both 15.
+
+`bull-level27.json` records an independent exhaustive breadth-first search.
+Unlike the campaign's iterative-deepening solver, this verifier does not use
+graph-distance bounds or any heuristic or goal pruning. It stores the earliest
+reachable depth of every distinct distribution. Equal-endpoint operations can
+be skipped because they change neither the distribution nor the counted moves.
+Using total mass `2^15` represents every average through 15 moves exactly.
+
+All 568,317 distinct states reachable within 14 moves are exhausted without a
+win. The first winning state occurs at depth 15. Separate searches with each
+edge removed exclude every solution of at most 15 moves, so all five edges are
+essential to a clear under the proposed limit. The recorded witness conserves
+100% exactly and first satisfies both targets on move 15.
+
+To reproduce, run from the project root:
+
+```sh
+mkdir -p local-test
+g++ -O3 -std=c++17 tools/certify-bull-level.cpp -o local-test/certify-bull-level
+cd local-test
+./certify-bull-level
+```
+
+The verifier writes `independent-certificate.json` in its working directory,
+including the graph, thresholds, state counts, edge-removal results, witness,
+and exact final percentages. The proof succeeds when the full graph's
+`firstWinningDepth` is 15 and every edge-removal check has
+`firstWinningDepth:null` with `excludedThrough:15`. These development files are
+not included in the standalone game's runtime payload.

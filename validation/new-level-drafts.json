@@ -1236,38 +1236,44 @@
     "topology": "diamond with an extra chord and two terminal arms"
   },
   {
-    "id": 28,
-    "name": "Almost still",
+    "id": 31,
+    "name": "The horned garden",
     "chapter": "The final garden",
     "difficulty": "Master",
-    "subtitle": "Patience brings the stream close to balance.",
+    "subtitle": "Between two horns, a triangle holds a hidden reserve.",
     "root": 0,
     "nodes": [
       {
         "id": "r",
-        "x": 13,
+        "x": 14,
         "y": 18,
         "label": "R"
       },
       {
         "id": "h",
-        "x": 38,
-        "y": 76,
+        "x": 31,
+        "y": 41,
         "label": "H"
       },
       {
+        "id": "j",
+        "x": 69,
+        "y": 41,
+        "label": "J"
+      },
+      {
         "id": "a",
-        "x": 63,
-        "y": 18,
+        "x": 50,
+        "y": 77,
         "label": "A",
         "goal": 24
       },
       {
         "id": "b",
-        "x": 87,
-        "y": 76,
+        "x": 86,
+        "y": 18,
         "label": "B",
-        "goal": 24
+        "goal": 19
       }
     ],
     "edges": [
@@ -1282,15 +1288,23 @@
       [
         2,
         3
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        2,
+        4
       ]
     ],
-    "hint": "Small differences still carry useful light.",
+    "hint": "A flower can lend some of its light and still remain above its target.",
     "hints": [
-      "Small differences still carry useful light.",
-      "Late in the puzzle, a modest refill can matter greatly."
+      "A flower can lend some of its light and still remain above its target.",
+      "The triangle connects two routes. Think about where to keep a reserve for the distant flower."
     ],
-    "discovery": "A nearly balanced garden still holds possibilities.",
-    "topology": "high-threshold four-vertex path"
+    "discovery": "A carefully kept surplus can bring two different paths into balance.",
+    "topology": "bull graph"
   },
   {
     "id": 29,

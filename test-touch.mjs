@@ -41,6 +41,18 @@ test('a wide touch band works while distant and ambiguous taps are rejected', ()
   assert.equal(nearestEdgeAt({ x: 80, y: 13 }, [[0, 1], [2, 3]], parallel, 10), 1);
 });
 
+test('petal frames reject vessel taps while ordinary junctions retain their smaller exclusion area', () => {
+  const positions = [{ x: 50, y: 60 }, { x: 150, y: 60 }, { x: 250, y: 60 }];
+  const edges = [[0, 1], [1, 2]];
+  const radii = [20, 32, 20];
+  assert.equal(nearestEdgeAt({ x: 119, y: 60 }, edges, positions, radii), null);
+  assert.equal(nearestEdgeAt({ x: 75, y: 60 }, edges, positions, radii), 0);
+  assert.equal(nearestEdgeAt({ x: 100, y: 60 }, edges, positions, radii), 0);
+  assert.equal(nearestEdgeAt({ x: 200, y: 60 }, edges, positions, radii), 1);
+  assert.equal(nearestEdgeAt({ x: 185, y: 60 }, edges, positions, radii), null);
+  assert.equal(nearestEdgeAt({ x: 186, y: 60 }, edges, positions, radii), 1);
+});
+
 test('small movement is a tap; dragging and long presses are not', () => {
   assert.equal(isTap({ x: 1, y: 1, time: 10 }, { x: 4, y: 5, time: 100 }), true);
   assert.equal(isTap({ x: 1, y: 1, time: 10 }, { x: 30, y: 5, time: 100 }), false);
@@ -66,7 +78,7 @@ function emitter() {
   };
 }
 
-function fixture() {
+function fixture({ radii = 22 } = {}) {
   const edgeTarget = { closest: () => null };
   const nativeButton = { closest: () => nativeButton };
   const outsideTarget = { closest: () => null };
@@ -83,7 +95,7 @@ function fixture() {
     board,
     getEdges: () => [[0, 1]],
     getPositions: () => [{ x: 30, y: 100 }, { x: 270, y: 100 }],
-    getNodeRadius: () => 22,
+    getNodeRadius: () => radii,
     onEdgeTap: index => moves.push(index),
     canInteract: () => available
   });
@@ -152,6 +164,23 @@ test('native buttons and keyboard clicks retain their normal activation path', (
   const keyboardClick = f.event(1, 120, 100, { target: f.nativeButton, detail: 0 });
   f.board.emit('click', keyboardClick);
   assert.ok(!keyboardClick.prevented && !keyboardClick.stopped, 'Keyboard activation must not be suppressed after a touch');
+  f.cleanup();
+});
+
+test('petal overlap blocks native pointer clicks while keyboard and clear pipe areas remain usable', () => {
+  const f = fixture({ radii: [32, 22] });
+  f.doc.emit('pointerdown', f.event(1, 64, 100, { target: f.nativeButton }));
+  f.doc.emit('pointerup', f.event(1, 64, 100, { target: f.nativeButton }));
+  const overlapClick = f.event(1, 64, 100, { target: f.nativeButton, detail: 1 });
+  f.board.emit('click', overlapClick);
+  assert.ok(overlapClick.prevented && overlapClick.stopped, 'A native button must not spend a move through a petal');
+  const keyboardClick = f.event(1, 64, 100, { target: f.nativeButton, detail: 0 });
+  f.board.emit('click', keyboardClick);
+  assert.ok(!keyboardClick.prevented && !keyboardClick.stopped, 'Keyboard and assistive activation remain available');
+  const clearClick = f.event(1, 120, 100, { target: f.nativeButton, detail: 1 });
+  f.board.emit('click', clearClick);
+  assert.ok(!clearClick.prevented && !clearClick.stopped, 'The visible pipe stays clickable');
+  assert.deepEqual(f.moves, [], 'Native button callbacks must not be duplicated by gesture handling');
   f.cleanup();
 });
 

@@ -1,7 +1,7 @@
 import { initialWeights, averageEdge, goalsMet, validateLevel } from './engine.js';
-import { installBoardTouch } from './touch.js';
-import { layoutGarden } from './layout.js';
-import { t, moveCount, translateLevel, getLanguage, setLanguage, applyStaticTranslations } from './i18n.js';
+import { installBoardTouch } from './touch.js?v=petal-bull-1';
+import { layoutGarden, minimumBoardHeight, placeNodeLabels } from './layout.js?v=petal-bull-1';
+import { t, moveCount, translateLevel, getLanguage, setLanguage, applyStaticTranslations } from './i18n.js?v=petal-bull-1';
 import { isRecord, completionTotals, highestUnlockedIndex, isLevelUnlocked, currentIndexForProgress, pendingMilestones, acknowledgeMilestone, recordCompletion, normalizeProgress, isValidResume } from './progression.js';
 
 const $ = id => document.getElementById(id);
@@ -16,6 +16,7 @@ let current = 0;
 let weights = [];
 let history = [];
 let positions = [];
+let nodeRadii = [];
 let nodeElements = [];
 let pipeElements = [];
 let lineElements = [];
@@ -213,6 +214,7 @@ function layoutBoard() {
   if (!levels[current] || !nodeElements.length) return;
   const board = $('garden-board');
   const width = board.clientWidth;
+  board.style.minHeight = minimumBoardHeight(levels[current], width) + 'px';
   const height = board.clientHeight;
   if (!width || !height) return;
   const layout = layoutGarden(levels[current], width, height);
@@ -221,9 +223,24 @@ function layoutBoard() {
   board.style.setProperty('--node-size', size + 'px');
   $('network').setAttribute('viewBox', '0 0 ' + width + ' ' + height);
   positions = layout.positions;
+  nodeRadii = layout.outerRadii;
   nodeElements.forEach((node, index) => {
     node.style.left = positions[index].x + 'px';
     node.style.top = positions[index].y + 'px';
+  });
+  const measurements = nodeElements.map(node => {
+    const name = node.querySelector('.node-label').getBoundingClientRect();
+    const goal = node.querySelector('.node-goal').getBoundingClientRect();
+    return { nameWidth: name.width, nameHeight: name.height, goalWidth: goal.width, goalHeight: goal.height };
+  });
+  const labels = placeNodeLabels(levels[current], layout, width, height, measurements);
+  nodeElements.forEach((node, index) => {
+    for (const [selector, point] of [['.node-label', labels[index].name], ['.node-goal', labels[index].goal]]) {
+      const label = node.querySelector(selector);
+      label.style.left = (point.x - positions[index].x + size / 2) + 'px';
+      label.style.top = (point.y - positions[index].y + size / 2) + 'px';
+      label.style.transform = 'none';
+    }
   });
   const boardBounds = board.getBoundingClientRect();
   const labelBounds = nodeElements.flatMap(node => ['.node-label', '.node-goal'].map(selector => {
@@ -246,7 +263,9 @@ function layoutBoard() {
         const overlapY = Math.max(0, Math.min(point.y + 13, label.bottom) - Math.max(point.y - 13, label.top));
         cost += overlapX * overlapY * 5;
       }
-      for (const node of positions) cost += Math.max(0, size / 2 + 14 - Math.hypot(point.x - node.x, point.y - node.y)) * 40;
+      positions.forEach((node, nodeIndex) => {
+        cost += Math.max(0, layout.outerRadii[nodeIndex] + 14 - Math.hypot(point.x - node.x, point.y - node.y)) * 40;
+      });
       for (const other of controls) cost += Math.max(0, 45 - Math.hypot(point.x - other.x, point.y - other.y)) * 25;
       return { ...point, cost };
     });
@@ -614,7 +633,7 @@ function wireControls() {
     board: $('garden-board'),
     getEdges: () => levels[current].edges,
     getPositions: () => positions,
-    getNodeRadius: () => parseFloat($('garden-board').style.getPropertyValue('--node-size')) / 2,
+    getNodeRadius: () => nodeRadii,
     onEdgeTap: takeMove,
     canInteract: () => isLevelUnlocked(levels, progress.records, current) && !busy && !goalsMet(levels[current], weights) && history.length < levels[current].budget
   });
@@ -645,7 +664,7 @@ async function boot() {
     let data;
     if (embeddedData) data = JSON.parse(embeddedData.textContent);
     else {
-      const response = await fetch('./levels.json');
+      const response = await fetch('./levels.json?v=petal-bull-1');
       if (!response.ok) throw new Error('Unable to load level data');
       data = await response.json();
     }

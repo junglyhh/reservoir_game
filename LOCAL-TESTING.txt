@@ -1,6 +1,25 @@
 A share of light / 流光花园
 30-LEVEL CAMPAIGN / 三十关版
 
+LEVEL 27 BULL-GRAPH PREVIEW / 第 27 关牛图试玩
+
+Open a_share_of_light_level_27_bull_preview.html in a browser to try the
+replacement directly. From the source project, run npm run build:preview
+and open local-test/level-27-bull-preview.html. No server is needed.
+The horned garden is a Master puzzle: A >= 24%, B >= 19%, simultaneously,
+within 15 moves. Fifteen is the verified minimum. Use 中 / EN to switch
+languages, tap any edge to average, and use Undo or Restart freely.
+This single-level preview has separate saves and language settings.
+It does not alter the complete game's progress or include a walkthrough.
+
+用浏览器打开 a_share_of_light_level_27_bull_preview.html 即可直接试玩。
+若使用源码，运行 npm run build:preview，然后打开
+local-test/level-27-bull-preview.html，无需本地服务器。
+“双角花庭”为牛图上的大师关卡：15 步内让 A >= 24%、B >= 19%
+同时成立；15 步已经验证为最少所需步数。可切换中英文，点击连线
+平均光量，随时撤销或重来。单关试玩使用独立存档和语言设置，
+不会改动完整游戏的进度，也不提供完整解法。
+
 This guide covers local testing and offline play for the 30-level campaign.
 GitHub Pages is configured to serve docs/ from the main branch at:
 https://junglyhh.github.io/reservoir_game/
@@ -19,6 +38,9 @@ ENGLISH
 3. Tap an edge to average the amounts at its ends. All marked targets are
    MINIMUMS: reach or exceed every threshold together within the move limit.
    Exact equality is unnecessary. Undo and restart remain available.
+   Target vessels have visible six-petal frames and minimum badges. Apricot
+   means more light is needed; sage green and a check mean currently met.
+   Sharing can reverse this state. Gold is the optimal level-clear award.
 4. Clear a level within its move limit to unlock the next. Locked levels
    cannot be selected; unlocked levels can be replayed. Hints give two
    conceptual perspectives, not a full solution.
@@ -37,6 +59,8 @@ ENGLISH
    their best results after reordering. Earlier completed levels beyond a
    gap stay recorded but remain locked until preceding levels are cleared.
    A valid in-progress puzzle resumes only when it is unlocked.
+   The new bull-graph level 27 has a fresh identity: the previous level 27
+   must not grant it completion or gold. Other valid records are retained.
 8. Saves need browser local storage. Private windows, some file viewers,
    and moving an HTML file may affect persistence. A hosted-site save does
    not automatically transfer to a downloaded file or another device.
@@ -60,6 +84,9 @@ Read README.md for the full catalog and developer validation notes.
 3. 点击连线，两端水池会平均分配光量。所有目标百分比都是下限：
    在步数限制内，同时达到或超过全部目标即可，无需恰好相等。
    可以随时撤销或重新开始当前关卡。
+   目标水池带有清晰的六瓣花框和下限标签。杏色表示尚未达标，
+   绿色和对勾表示当前已达标；再次分享后可能恢复未达标状态。
+   金色花朵仍是以最少步数通关的奖励。
 4. 在步数上限内通关即可解锁下一关。未解锁关卡不可选择，已解锁
    关卡可以重玩。每关有两个思路提示，不提供完整操作步骤。
 5. 三十关依次为简单（1–3）、中等（4–16）、困难（17–26）和大师
@@ -75,6 +102,8 @@ Read README.md for the full catalog and developer validation notes.
 7. 旧存档按稳定的关卡身份迁移，原有十关重新排序后仍保留最佳成绩。
    如果旧记录在中间存在未通关的空缺，后面的成绩仍保留，但必须
    先补齐前面的关卡才能解锁。进行中的关卡仅在已解锁时恢复。
+   新的牛图第 27 关使用全新身份，旧第 27 关的成绩不计入新关卡，
+   其他有效成绩均保留。
 8. 存档依赖浏览器本地存储。无痕窗口、部分文件预览器或移动 HTML
    文件可能影响保存。线上游戏的存档不会自动转移到下载文件，
    不同设备之间也不会自动同步。

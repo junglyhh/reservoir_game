@@ -1,0 +1,135 @@
+/* Target blooms have a persistent flower silhouette, even at zero light.
+   Keep these bounds in sync with layout.js:
+   frame radius = node-size / 2 + clamp(6px, node-size * .14, 12px);
+   target labels extend 40px below that radius and the goal pill is 70px wide.
+   The met state changes color and its existing checkmark, never geometry. */
+
+.garden-board .reservoir.target {
+  --petal-reach: clamp(6px, calc(var(--node-size) * .14), 12px);
+  --petal-radius: calc(var(--node-size) / 2 + var(--petal-reach));
+  --petal-width: calc(var(--node-size) * .38);
+  --petal-height: calc(var(--node-size) * .49);
+  --bloom-frame: #ae704e;
+  --bloom-petal: #ffe6cd;
+  --bloom-petal-inner: #f4d4b3;
+  --bloom-ink: #76472e;
+  --bloom-badge: #fff7e9;
+}
+
+/* Override the older faint/compact petals so targets stay recognizable on
+   every board. Six ellipses remain inside the declared frame radius. */
+.garden-board .reservoir.target .petals,
+.garden-board .reservoir.target.lit .petals {
+  inset: 0;
+  z-index: 1;
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
+  transition: none;
+}
+
+.garden-board .reservoir.target .petals span {
+  box-sizing: border-box;
+  left: calc(50% - var(--petal-width) / 2);
+  top: calc(50% - var(--petal-radius));
+  width: var(--petal-width);
+  height: var(--petal-height);
+  border-radius: 50%;
+  border: 1.5px solid var(--bloom-frame);
+  background: linear-gradient(180deg, var(--bloom-petal), var(--bloom-petal-inner));
+  transform-origin: 50% var(--petal-radius);
+  transform: rotate(var(--petal-angle, 0deg));
+  pointer-events: none;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.garden-board .reservoir.target .glass-vessel {
+  border: 1.5px solid var(--bloom-frame);
+  background: radial-gradient(circle at 32% 23%, #ffffffa6, transparent 45%),
+    linear-gradient(145deg, #fffaf0, #f5f4e7);
+  box-shadow: inset 0 0 12px #6e56300d, 0 3px 7px #3a563118;
+}
+
+.garden-board .reservoir.target .node-label {
+  top: calc(100% + var(--petal-reach) + 3px);
+  color: var(--bloom-ink);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: .4px;
+  pointer-events: none;
+}
+
+.garden-board .reservoir.target .node-goal {
+  box-sizing: border-box;
+  top: calc(100% + var(--petal-reach) + 20px);
+  width: 70px;
+  padding: 2px 5px;
+  border: 1px solid var(--bloom-frame);
+  border-radius: 6px;
+  background: var(--bloom-badge);
+  color: var(--bloom-ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.garden-board .reservoir.target.lit {
+  --bloom-frame: #5d8964;
+  --bloom-petal: #dcefd1;
+  --bloom-petal-inner: #bdddb6;
+  --bloom-ink: #2d5d3e;
+  --bloom-badge: #e5f1dc;
+}
+
+/* Sage indicates a currently satisfied target. Gold remains the award for
+   clearing a whole level in its verified minimum number of moves. */
+.garden-board .reservoir.target.lit .petals span {
+  border-color: var(--bloom-frame);
+  background: linear-gradient(180deg, var(--bloom-petal), var(--bloom-petal-inner));
+}
+
+.garden-board .reservoir.target.lit .glass-vessel {
+  border-color: var(--bloom-frame);
+  box-shadow: inset 0 0 12px #345d3010, 0 0 14px #6a986529;
+}
+
+.garden-board .reservoir.target.lit .node-label,
+.garden-board .reservoir.target.lit .node-goal {
+  color: var(--bloom-ink);
+}
+
+.target-symbol {
+  background: #fff0de;
+  border-color: #bc8c67;
+  color: #875035;
+}
+
+.target-row.met .target-symbol {
+  background: #e0efd7;
+  border-color: #63916b;
+  color: #2d5d3e;
+}
+
+.target-row.met .target-bar > span {
+  background: #4f7d57;
+}
+
+.target-row.met .target-name,
+.target-row.met .target-goal,
+.target-row.met .target-goal[data-goal]::before,
+.target-row.met .target-line .target-amount {
+  color: #2d5d3e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden-board .reservoir.target .petals span,
+  .garden-board .reservoir.target .glass-vessel,
+  .garden-board .reservoir.target .node-goal {
+    transition: none;
+  }
+}

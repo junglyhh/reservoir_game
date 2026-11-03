@@ -28,6 +28,7 @@ double_fork=[(13,50),(36,50),(60,18),(60,77),(88,18),(88,77)]
 two_hubs=[(13,18),(13,77),(39,50),(64,50),(88,18),(88,77)]
 chain_triangles=[(13,50),(37,18),(37,77),(63,50),(88,18),(88,77)]
 long_path=[(12,15),(31,77),(50,15),(69,77),(88,15)]
+bull=[(14,18),(31,41),(69,41),(50,77),(86,18)]
 
 def level(id,name,zhname,difficulty,topology,coords,edges,goals,labels,subtitle,zhsubtitle,hints,zhhints,discovery,zhdiscovery):
     chapter={'Medium':'New paths','Hard':'Deeper waters','Master':'The final garden'}[difficulty]
@@ -53,7 +54,7 @@ specs=[
  (25,'Keep the hearth bright','守住暖光','Hard','triangular islands with a home-side bloom',bridge,[(0,1),(0,2),(1,2),(2,3),(3,4),(3,5),(4,5)],{1:17,4:14,5:13},['R','A','H','J','B','C'],'Light the far side without forgetting home.','照亮远处，也别忘了出发的地方。',['One flower stays on the source side of the bridge.','A local reserve may need protection while distant flowers grow.'],['有一朵花，留在桥梁靠近源点的一侧。','照顾远方的花时，也要留心本地的储备。'],'A long journey still needs a balanced starting place.','光走得再远，起点也需要保持平衡。'),
  (26,'The twin fountains','双泉花语','Hard','two connected branching hubs',two_hubs,[(0,2),(1,2),(2,3),(3,4),(3,5)],{1:20,4:13,5:13},['R','A','H','J','B','C'],'Two fountains serve three different corners.','两座泉心，照顾三处不同的角落。',['The nearer bloom competes with the bridge for the same reserve.','The two distant flowers can be planned as a pair.'],['近处的花与连接两泉的小桥，共用同一份储备。','远处的两朵花，可以放在一起考虑。'],'Shared junctions connect otherwise separate needs.','共用的中转点，让不同的需求彼此关联。'),
  (27,'Braided currents','交织溪流','Hard','diamond with an extra chord and two terminal arms',chain_triangles,[(0,1),(0,2),(1,2),(1,3),(2,3),(3,4),(3,5)],{4:17,5:16},['R','H','J','K','A','B'],'Several currents gather before the final fork.','几股溪流汇聚之后，迎来最后的岔路。',['The meeting point can receive light from either side.','More upstream connections do not mean every connection is needed.'],['汇流处，可以从两侧获得光量。','上游连线更多，并不意味着每一条都要使用。'],'A rich network still benefits from a focused plan.','丰富的网络，同样需要明确的计划。'),
- (28,'Almost still','近乎宁静','Master','high-threshold four-vertex path',zigzag,[(0,1),(1,2),(2,3)],{2:24,3:24},['R','H','A','B'],'Patience brings the stream close to balance.','耐心，让溪流渐渐接近平衡。',['Small differences still carry useful light.','Late in the puzzle, a modest refill can matter greatly.'],['细微的差别，仍然可以传递有用的光。','接近终点时，一点点补充也可能十分重要。'],'A nearly balanced garden still holds possibilities.','接近平衡的花园，仍有改变的可能。'),
+ (31,'The horned garden','双角花庭','Master','bull graph',bull,[(0,1),(1,2),(2,3),(3,1),(2,4)],{3:24,4:19},['R','H','J','A','B'],'Between two horns, a triangle holds a hidden reserve.','双角之间，小小的三角藏着一份余光。',['A flower can lend some of its light and still remain above its target.','The triangle connects two routes. Think about where to keep a reserve for the distant flower.'],['花朵可以借出一部分光，同时仍然达到自己的目标。','三角形连接着两条路线。想一想，该把留给远处花朵的余光存在哪里。'],'A carefully kept surplus can bring two different paths into balance.','妥善保留的余光，能让两条不同的路线达到平衡。'),
  (29,'The last few drops','最后几滴','Master','precision branching fountain',[(13,50),(48,50),(86,18),(86,77)],[(0,1),(1,2),(1,3)],{2:25.5,3:25.5},['R','H','A','B'],'Give both flowers the last little share they need.','把最后需要的一点光，分给两朵花。',['The flower targets are slightly above a perfectly even four-way split.','Balance can be temporary; choose which reserves to protect.'],['花朵的目标，略高于四个水池均分后的光量。','平衡只是暂时的；想一想，哪些光量需要保留。'],'Precision can grow from many gentle exchanges.','多次温和的交换，也能积累出精妙的结果。'),
  (30,'The long dawn','长夜初晓','Master','five-vertex winding path',long_path,[(0,1),(1,2),(2,3),(3,4)],{4:17},['R','H','J','K','A'],'Carry a generous share to the end of the stream.','带着充足的光，走到溪流尽头。',['Each relay holds part of the source’s original light.','The farthest flower may need a reserve built across several junctions.'],['每个中转点，都保存着源点最初光量的一部分。','最远的花，可能需要多个中转点一起积蓄光量。'],'A distant goal can depend on the whole chain.','远方的目标，可能需要整条路线共同努力。'),
 ]
@@ -72,7 +73,7 @@ def solve(data,max_depth=20,seconds=35):
     return json.loads(run.stdout)
 
 if __name__=='__main__':
-    selected=set(map(int,sys.argv[1:])) if len(sys.argv)>1 else set(range(11,31))
+    selected=set(map(int,sys.argv[1:])) if len(sys.argv)>1 else {data['id'] for data in new}
     result_path=OUT/'new-level-search.json'
     results=json.loads(result_path.read_text()) if result_path.exists() else {}
     for data in new:

@@ -6,7 +6,7 @@
 
 This campaign expands the game to **30 gardens**, with sequential unlocking, golden-bloom challenges, and bilingual milestone celebrations. The final four Master levels must be cleared in the verified minimum number of moves. GitHub Pages is configured to serve the `docs/` directory from the `main` branch. The project also builds a self-contained version for offline play and local testing.
 
-A quiet graph puzzle about sharing luminous water: every move replaces the amounts at the two ends of a selected edge with their average. The **Morning Garden / 晨光花园** theme uses warm ivory backgrounds, sage-green glass and controls, mint water, amber blooms, and dark text.
+A quiet graph puzzle about sharing luminous water: every move replaces the amounts at the two ends of a selected edge with their average. The **Morning Garden / 晨光花园** theme uses warm ivory backgrounds, sage-green glass and controls, mint water, apricot target petals, amber awards, and dark text.
 
 The **中 / EN** switch on the right of the first header line selects English or Simplified Chinese. Both languages cover all 30 levels, conceptual hints, instructions, unlock messages, milestone celebrations, dialogs, and accessibility labels. Switching language keeps the current puzzle and move history.
 
@@ -23,6 +23,18 @@ npm run build:local
 ```
 
 Then open **`local-test/index.html`** in a browser. No `npm install` is required. See `LOCAL-TESTING.txt` for a short testing guide in both languages.
+
+### Test the replacement for level 27
+
+Level 27 is **The horned garden / 双角花庭**, a Master puzzle on the bull graph: a triangle with a leaf attached to each of two different triangle vertices. It has two blooms, **A ≥ 24%** and **B ≥ 19%**, and a **15-move limit**, equal to the verified minimum. Both targets must be met together. All five edges are needed to solve it within that limit.
+
+```sh
+npm run build:preview
+```
+
+Open **`local-test/level-27-bull-preview.html`**. This self-contained preview opens directly at the replacement puzzle and has its own saves and language preference. It retains the Morning Garden theme, English/Chinese switch, edge tapping, undo, restart, and conceptual hints. Campaign navigation and milestone announcements are omitted from this single-level test. The normal 30-level build keeps sequential unlocking.
+
+第 27 关已替换为牛图上的大师关卡 **双角花庭**：一个三角形的两个不同顶点各接一片叶子。目标为 **A ≥ 24%、B ≥ 19%**，须同时达标；步数上限和已验证最少步数均为 **15 步**。运行上述命令后，打开 `local-test/level-27-bull-preview.html` 即可直接试玩。试玩版使用独立存档，保留中英文切换、点击连线、撤销、重来和思路提示。
 
 The editable files in **`docs/`** use ES modules and load their level data separately. To test those source files, serve them over HTTP:
 
@@ -47,6 +59,14 @@ Keyboard: **Tab** to a pipe control, **Enter/Space** to share, **Z** to undo, an
 
 中文规则：每个目标百分比都是**下限**，达到或超过即可，不必恰好相等。所有目标必须在步数限制内同时达标。在步数上限内通关即可前进。第 2–26 关允许使用多于最少步数的方式通关，金色花朵是可选挑战；第一关及第 27–30 关大师关卡的步数上限等于最少所需步数，通关即获得金色花朵。全部三十关的最少步数均已严格验证。
 
+### Recognizing target blooms
+
+Every target has a visible **six-petal frame**, including when it is empty. Ordinary junctions keep their circular vessels. Apricot petals with a terracotta outline identify a target that still needs light; sage-green petals and a **✓** beside the minimum show that it is currently satisfied. Sharing light can make the target fall below its minimum again, immediately restoring the apricot frame and removing the check. The flower shape and minimum badge remain visible in either state.
+
+Gold remains the award for an optimal level clear. A green target indicates its current amount only. Petal frames scale with the vessels, leave edge interactions available, and use brief state transitions that respect reduced-motion preferences.
+
+每个目标水池都有清晰的**六瓣花框**，尚未获得光量时也能辨认；普通中转点仍为圆形水池。杏色花瓣和陶土色描边表示目标尚未达标，鼠尾草绿色花瓣及下限旁的 **✓** 表示当前已达标。再次分享光量后若低于下限，会立即恢复杏色并移除对勾。花形轮廓和下限标签始终保留。金色仍用于奖励以最少步数通关，绿色只表示当前目标达标。
+
 ## Campaign and difficulty
 
 The 20 additions comprise exactly **10 Medium, 7 Hard, and 3 Master** levels. Together with the original ten, the campaign has:
@@ -58,7 +78,7 @@ The 20 additions comprise exactly **10 Medium, 7 Hard, and 3 Master** levels. To
 | 17–26 | Hard / 困难 | 10 |
 | 27–30 | Master / 大师 | 4 |
 
-Levels are ordered by difficulty and then by their verified minimum move count. Every level has **at most three blooms**. The gardens include paths, forks, stars, diamonds, several cycle shapes, bridges between triangular regions, a ladder, bowtie loops, and additional chords. Their different reserves and thresholds create different sharing decisions.
+Levels are ordered by difficulty and then by their verified minimum move count. Every level has **at most three blooms**. The gardens include paths, forks, stars, diamonds, several cycle shapes, bridges between triangular regions, a ladder, bowtie loops, the bull graph, and additional chords. Their different reserves and thresholds create different sharing decisions.
 
 The table lists move counts, not solution sequences. The displayed campaign number is separate from the stable internal ID used to preserve saved records.
 
@@ -90,7 +110,7 @@ The table lists move counts, not solution sequences. The displayed campaign numb
 | 24 | Two distant shores / 双岸遥光 | Hard | 2 | 16 | 12 |
 | 25 | The twin fountains / 双泉花语 | Hard | 3 | 17 | 13 |
 | 26 | Moonlit circle / 月下圆环 | Hard | 3 | 17 | 15 |
-| 27 | Almost still / 近乎宁静 | Master | 2 | 15 | 15 |
+| 27 | The horned garden / 双角花庭 | Master | 2 | 15 | 15 |
 | 28 | The last few drops / 最后几滴 | Master | 2 | 16 | 16 |
 | 29 | Perfect harmony / 和谐共鸣 | Master | 3 | 18 | 18 |
 | 30 | The long dawn / 长夜初晓 | Master | 1 | 19 | 19 |
@@ -118,9 +138,11 @@ The original ten puzzles retain their stable IDs, even though their displayed ca
 
 Earlier saves may contain completed gardens beyond an uncleared gap. Those records are retained, but the new sequential unlocking rule still requires the intervening gardens to be cleared. A valid in-progress puzzle resumes only if it is unlocked in the new order; otherwise the game opens the next available garden. Existing records become useful as soon as their preceding levels are cleared.
 
-The stricter Master limits also apply to saved results. An earlier clear of levels 27–30 that used more than 15, 16, 18, or 19 moves, respectively, no longer counts as completed; those levels must be cleared again within the new limits. Existing golden-bloom results remain valid.
+The stricter Master limits also apply to saved results. A clear exceeding the current move limit does not count as completed. The final four limits are 15, 16, 18, and 19 moves, respectively.
 
-新大师关步数上限也适用于旧存档。第 27–30 关过去的通关成绩若分别超过 15、16、18、19 步，将不再计为通关，需要按新上限重新挑战；已获得金色花朵的成绩仍然有效。
+The replacement at campaign position 27 has a fresh stable ID, **31**. The retired puzzle's ID28 completion or golden bloom does not count for this different puzzle. All other valid records are retained. Clear the new level 27 to reopen later gardens; their existing records are preserved. The isolated preview uses separate storage and cannot change campaign saves.
+
+大师关步数上限也适用于旧存档；超过当前上限的成绩不计为通关。最后四关的上限依次为 15、16、18、19 步。替换后的第 27 关使用新的稳定编号 31，原第 27 关（编号 28）的通关或金色花朵不会算作新关卡的成绩。其他有效成绩均保留；通过新的第 27 关后，后续关卡会重新开放。单关试玩使用独立存档，不会改动完整游戏的进度。
 
 Private browsing or a file-viewer app may not retain progress. Reopening a standalone file from a different location can also give it a different storage context, depending on the browser.
 
@@ -143,9 +165,15 @@ With a modern Node.js installation, run:
 npm test
 ```
 
-No dependency installation is required. The tests cover all 30 winning certificates, mass conservation, simultaneous minimum targets, immutable move history, touch gestures, **210 responsive board configurations**, English/Chinese coverage, save migration, locked-level guards, and milestone behavior. The geometry checks complement visual testing on real phones.
+No dependency installation is required. The tests cover all 30 winning certificates, mass conservation, simultaneous minimum targets, immutable move history, touch gestures, **300 responsive board configurations and 600 bilingual label layouts**, English/Chinese coverage, save migration, locked-level guards, and milestone behavior. Geometry checks include petal bounds, label clearance and attachment, and tappable edge midpoints. Crowded boards receive extra height rather than reducing label readability. The geometry checks complement visual testing on real phones.
 
 All 30 minimum move counts are certified. The two original final puzzles now have complete exact proofs as well: stable ID 9 needs 15 moves, and stable ID 10 needs 18. Their shorter horizons were exhaustively excluded using integer arithmetic; the successful witnesses were also replayed exactly.
+
+The replacement bull-graph puzzle at position 27 is certified at 15 moves. Its evidence also excludes a solution within that budget when any triangle edge is omitted; the two leaf edges are required to connect the source and the far bloom. Its proof material is kept in `validation/proofs/bull-level27.json`.
+
+An independent breadth-first search, with exact arithmetic and no heuristic pruning, exhaustively checks all 568,317 distinct states reachable within 14 moves and first finds a win at move 15. Reproduction instructions are in `validation/proofs/README.md`.
+
+Run `npm run test:preview` to rebuild and check the isolated HTML. It exercises the bundled boot and move flow, both languages, independent save keys, undo, a winning replay, restart, and suppression of campaign milestones. Presentation and sound are stubbed in this JavaScript check; it does not substitute for playing the HTML in a browser.
 
 Developer-only move certificates and search evidence are kept **outside `docs/`**, under `validation/`. The shipped `docs/levels.json` contains no solution sequences, and the standalone builder embeds only player-facing level data. Proof files are development material and are not loaded by the game.
 
@@ -154,17 +182,21 @@ Key files:
 - `docs/index.html` — game interface, help, and milestone dialogs
 - `docs/styles.css`, `docs/mobile.css`, `docs/i18n.css` — layout and bilingual typography
 - `docs/morning-garden.css` — the ivory, sage, mint, and amber palette
+- `docs/petal-frames.css` — persistent target flower frames, minimum badges, and reversible reached-state colors
 - `docs/app.js` — game state, conceptual hints, sound, and rendering
 - `docs/progression.js` — sequential unlocks, stable-ID save migration, and milestone state
 - `docs/engine.js`, `docs/layout.js`, `docs/touch.js` — averaging, graph layout, and touch recognition
 - `docs/levels.json` — 30 sorted puzzles, with no solution paths
 - `docs/i18n.js`, `docs/i18n-static.js`, `docs/i18n-levels.js` — English/Chinese interface and level text
 - `build-local.mjs` — creates the self-contained offline game
+- `tools/build-level-preview.mjs` — creates the isolated, bilingual level-27 playtest
+- `test-level-preview.mjs` — checks the preview's bundled boot, moves, language, and isolated saves
 - `test-game.mjs`, `test-touch.mjs`, `test-layout.mjs`, `test-i18n.mjs`, `test-progression.mjs` — automated checks
 - `validation/level-solutions.json` — developer certificates keyed by stable level ID
 - `validation/campaign-catalog.json` — campaign order, names, graph sizes, and difficulty metadata
 - `validation/proofs/README.md` — reproducible exact proofs for the original final puzzles
 - `tools/solve-levels.cpp`, `tools/certify-final-levels.cpp` — exact validation solvers
+- `tools/certify-bull-level.cpp`, `validation/proofs/bull-level27.json` — independent exhaustive proof for the replacement level 27
 - `tools/expand-campaign.py`, `tools/assemble-campaign.py` — campaign definitions and assembly
 
 ## Mathematical foundation

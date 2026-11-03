@@ -1,3 +1,7 @@
+function vesselRadii(positions, nodeRadius) {
+  return positions.map((_, index) => Math.max(0, Number(Array.isArray(nodeRadius) ? nodeRadius[index] : nodeRadius) || 0) + 3);
+}
+
 /**
  * Select the closest visible pipe in CSS pixels. Reservoirs are deliberately
  * excluded: tapping a vessel must never spend a move on a nearby connection.
@@ -5,8 +9,10 @@
  */
 export function nearestEdgeAt(point, edges, positions, nodeRadius, tolerance = 24) {
   if (!point || !Number.isFinite(point.x) || !Number.isFinite(point.y)) return null;
-  const radius = Math.max(0, Number(nodeRadius) || 0) + 3;
-  if (positions.some(node => Math.hypot(point.x - node.x, point.y - node.y) <= radius)) return null;
+  // A target's flower frame is part of the vessel, while ordinary junctions
+  // retain their smaller circular exclusion area. Numeric callers still work.
+  const radii = vesselRadii(positions, nodeRadius);
+  if (positions.some((node, index) => Math.hypot(point.x - node.x, point.y - node.y) <= radii[index])) return null;
   const candidates = [];
   edges.forEach(([from, to], index) => {
     const a = positions[from];
@@ -15,9 +21,8 @@ export function nearestEdgeAt(point, edges, positions, nodeRadius, tolerance = 2
     const dx = b.x - a.x;
     const dy = b.y - a.y;
     const length = Math.hypot(dx, dy);
-    if (length <= radius * 2) return;
-    const end = radius / length;
-    const fraction = Math.max(end, Math.min(1 - end, ((point.x - a.x) * dx + (point.y - a.y) * dy) / (length * length)));
+    if (length <= radii[from] + radii[to]) return;
+    const fraction = Math.max(radii[from] / length, Math.min(1 - radii[to] / length, ((point.x - a.x) * dx + (point.y - a.y) * dy) / (length * length)));
     const distance = Math.hypot(point.x - (a.x + fraction * dx), point.y - (a.y + fraction * dy));
     if (distance <= tolerance) candidates.push({ index, distance });
   });
@@ -102,7 +107,21 @@ export function installBoardTouch({ board, getEdges, getPositions, getNodeRadius
   function resetPointers() { active = null; downPointers.clear(); }
 
   function clickCapture(event) {
-    if (!suppressClick || event.detail === 0) return;
+    if (event.detail === 0) return;
+    // A native pipe button can extend over a neighbouring petal. Apply the
+    // same vessel exclusion to pointer clicks while preserving keyboard use.
+    if (event.target.closest?.('.pipe-control')) {
+      const point = pointFor(event);
+      const positions = getPositions();
+      const radii = vesselRadii(positions, getNodeRadius());
+      if (positions.some((node, index) => Math.hypot(point.x - node.x, point.y - node.y) <= radii[index])) {
+        suppressClick = null;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return;
+      }
+    }
+    if (!suppressClick) return;
     if (Date.now() > suppressClick.until) { suppressClick = null; return; }
     if (Math.hypot(event.clientX - suppressClick.x, event.clientY - suppressClick.y) > 30) return;
     suppressClick = null;

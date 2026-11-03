@@ -56,6 +56,29 @@ assert.equal(completionTotals(levels, oldComplete.records).completed, 10);
 assert.deepEqual(oldComplete.milestonesPending, [], 'Ten old out-of-order wins do not announce stage 11 before the new first ten are cleared');
 groups++;
 
+// Replacing a puzzle must not award its new version an old completion. Keep
+// every unrelated record, then restore later access once the replacement wins.
+const currentCampaign = JSON.parse(readFileSync(new URL('./docs/levels.json', import.meta.url), 'utf8'));
+assert.equal(currentCampaign[26].id, 31);
+const previousRecords = Object.fromEntries(currentCampaign.filter(level => level.id !== 31).map(level => [level.id, { moves: level.par }]));
+previousRecords[28] = { moves: 15 };
+const replacementProgress = normalizeProgress({
+  campaignVersion: 2, currentId: 28, records: previousRecords,
+  active: { levelId: 28, weights: [100, 0, 0, 0], history: [], hintStep: -1 }
+}, currentCampaign);
+assert.equal(replacementProgress.records[28], undefined);
+assert.equal(replacementProgress.records[31], undefined);
+assert.equal(replacementProgress.active, null, 'Do not resume the retired graph as the new one');
+assert.equal(replacementProgress.currentId, 31);
+assert.equal(highestUnlockedIndex(currentCampaign, replacementProgress.records), 26);
+for (const level of currentCampaign.filter(level => level.id !== 31)) {
+  assert.deepEqual(replacementProgress.records[level.id], previousRecords[level.id], 'Preserve all unrelated records');
+}
+const replacementCleared = recordCompletion(replacementProgress, currentCampaign, 26, 15);
+assert.equal(highestUnlockedIndex(currentCampaign, replacementCleared.records), 29);
+assert.deepEqual(completionTotals(currentCampaign, replacementCleared.records), { completed: 30, gold: 30, total: 30 });
+groups++;
+
 progress = normalizeProgress(null, levels);
 for (let i = 0; i < 10; i++) progress = recordCompletion(progress, levels, i, 6);
 assert.deepEqual(progress.milestonesPending, ['ten']);

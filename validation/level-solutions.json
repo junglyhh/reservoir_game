@@ -612,30 +612,30 @@
         "stateDenominator": 16777216
       }
     },
-    "28": {
+    "31": {
       "solution": [
         0,
-        1,
-        2,
+        3,
+        0,
+        3,
         1,
         0,
         1,
-        2,
+        4,
+        0,
         1,
+        4,
         0,
         1,
         2,
-        1,
-        0,
-        1,
-        2
+        4
       ],
       "optimalMoves": 15,
       "optimalVerified": true,
       "proof": {
         "method": "exact dyadic iterative-deepening search",
         "excludedThrough": 14,
-        "visited": 1967,
+        "visited": 676508,
         "solver": "tools/solve-levels.cpp",
         "stateDenominator": 16777216
       }
