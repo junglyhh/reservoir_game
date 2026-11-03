@@ -374,7 +374,7 @@
     "edges": 3,
     "topology": "high-threshold four-vertex path",
     "par": 15,
-    "budget": 20,
+    "budget": 15,
     "optimalVerified": true
   },
   {
@@ -388,7 +388,7 @@
     "edges": 3,
     "topology": "precision branching fountain",
     "par": 16,
-    "budget": 21,
+    "budget": 16,
     "optimalVerified": true
   },
   {
@@ -402,7 +402,7 @@
     "edges": 9,
     "topology": "original garden",
     "par": 18,
-    "budget": 23,
+    "budget": 18,
     "optimalVerified": true
   },
   {
@@ -416,7 +416,7 @@
     "edges": 4,
     "topology": "five-vertex winding path",
     "par": 19,
-    "budget": 24,
+    "budget": 19,
     "optimalVerified": true
   }
 ]

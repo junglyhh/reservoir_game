@@ -1930,7 +1930,7 @@
     "topology": "high-threshold four-vertex path",
     "par": 15,
     "parVerified": true,
-    "budget": 20
+    "budget": 15
   },
   {
     "id": 29,
@@ -1990,7 +1990,7 @@
     "topology": "precision branching fountain",
     "par": 16,
     "parVerified": true,
-    "budget": 21
+    "budget": 16
   },
   {
     "id": 10,
@@ -1998,7 +1998,7 @@
     "chapter": "The moon garden",
     "difficulty": "Master",
     "subtitle": "Find the balance that brings the garden to life.",
-    "budget": 23,
+    "budget": 18,
     "par": 18,
     "parVerified": true,
     "root": 0,
@@ -2161,6 +2161,6 @@
     "topology": "five-vertex winding path",
     "par": 19,
     "parVerified": true,
-    "budget": 24
+    "budget": 19
   }
 ]

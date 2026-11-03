@@ -19,13 +19,17 @@ ENGLISH
 3. Tap an edge to average the amounts at its ends. All marked targets are
    MINIMUMS: reach or exceed every threshold together within the move limit.
    Exact equality is unnecessary. Undo and restart remain available.
-4. Clear a level to unlock the next. Golden blooms are optional for
-   advancement. Locked levels cannot be selected; unlocked levels can be
-   replayed. Hints give two conceptual perspectives, not a full solution.
+4. Clear a level within its move limit to unlock the next. Locked levels
+   cannot be selected; unlocked levels can be replayed. Hints give two
+   conceptual perspectives, not a full solution.
 5. The 30 levels are ordered Easy (1–3), Medium (4–16), Hard (17–26), and
    Master (27–30). The 20 additions are 10 Medium, 7 Hard, and 3 Master.
    Every level has at most three blooms. All gold move targets are verified
-   minima; the normal move limits allow more relaxed completion.
+   minima. Levels 2–26 allow extra moves for an ordinary clear. The final
+   four Master levels (27–30) have move limits of 15, 16, 18, and 19,
+   respectively, equal to their minimums. They must be cleared in the
+   minimum moves, so every successful clear also earns a golden bloom.
+   The one-move introductory level likewise awards gold on completion.
 6. Celebrations appear after the first 10 and 20 levels, after all 30 are
    cleared if any gold remains, and after all 30 golden blooms are earned.
    The final all-gold celebration introduces the tea-sharing proof challenge.
@@ -56,12 +60,15 @@ Read README.md for the full catalog and developer validation notes.
 3. 点击连线，两端水池会平均分配光量。所有目标百分比都是下限：
    在步数限制内，同时达到或超过全部目标即可，无需恰好相等。
    可以随时撤销或重新开始当前关卡。
-4. 通关即可解锁下一关，不必先获得金色花朵。未解锁关卡不可选择，
-   已解锁关卡可以重玩。每关有两个思路提示，不提供完整操作步骤。
+4. 在步数上限内通关即可解锁下一关。未解锁关卡不可选择，已解锁
+   关卡可以重玩。每关有两个思路提示，不提供完整操作步骤。
 5. 三十关依次为简单（1–3）、中等（4–16）、困难（17–26）和大师
    （27–30）。新增二十关包括十关中等、七关困难和三关大师，每关
-   最多三朵目标花。金色花朵步数均已严格验证为最少步数；正常通关
-   的步数限制更宽松。
+   最多三朵目标花。金色花朵步数均已严格验证为最少步数。第 2–26
+   关允许使用额外步数通关。最后四关大师关卡（第 27–30 关）的
+   步数上限分别为 15、16、18、19 步，等于各关最少所需步数；
+   必须以最少步数通关，因此通关即获得金色花朵。第一关只需一步，
+   通关同样获得金色花朵。
 6. 通过前十关、前二十关、全部通关但尚未集齐金色花朵，以及集齐
    三十朵金色花朵时，会出现相应的庆祝页面。全金庆祝页将介绍
    “图上的茶水分享”数学问题，作为终极证明挑战。

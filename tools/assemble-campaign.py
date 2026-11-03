@@ -105,7 +105,8 @@ for original in campaign.original:
     else:
         raise ValueError('Missing original-level certificate: '+str(id))
     data['par']=par;data['parVerified']=verified
-    if id!=1:data['budget']=max(data['budget'],par+(5 if data['difficulty']=='Master' else 2))
+    if data['difficulty']=='Master':data['budget']=par
+    elif id!=1:data['budget']=max(data['budget'],par+2)
     en,zh=concepts[id]
     data['hint']=en[0];data['hints']=en
     translation=old_zh[str(id)]
@@ -120,7 +121,7 @@ for data in campaign.new:
     id=data['id'];result=new_search[str(id)]
     assert result['optimalVerified'],id
     par=result['optimalMoves'];data['par']=par;data['parVerified']=True
-    data['budget']=par+({'Medium':3,'Hard':4,'Master':5}[data['difficulty']])
+    data['budget']=par+({'Medium':3,'Hard':4,'Master':0}[data['difficulty']])
     certificates[str(id)]=dict(solution=result['solution'],optimalMoves=par,optimalVerified=True,proof=dict(method='exact dyadic iterative-deepening search',excludedThrough=par-1,visited=result['visited'],solver='tools/solve-levels.cpp',stateDenominator=2**24))
     translated[str(id)]=campaign.translations[id]
     levels.append(data)

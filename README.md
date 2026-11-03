@@ -4,13 +4,13 @@
 
 **[Play A share of light / 流光花园](https://junglyhh.github.io/reservoir_game/)**
 
-This campaign expands the game to **30 gardens**, with sequential unlocking, optional golden-bloom challenges, and bilingual milestone celebrations. GitHub Pages is configured to serve the `docs/` directory from the `main` branch. The project also builds a self-contained version for offline play and local testing.
+This campaign expands the game to **30 gardens**, with sequential unlocking, golden-bloom challenges, and bilingual milestone celebrations. The final four Master levels must be cleared in the verified minimum number of moves. GitHub Pages is configured to serve the `docs/` directory from the `main` branch. The project also builds a self-contained version for offline play and local testing.
 
 A quiet graph puzzle about sharing luminous water: every move replaces the amounts at the two ends of a selected edge with their average. The **Morning Garden / 晨光花园** theme uses warm ivory backgrounds, sage-green glass and controls, mint water, amber blooms, and dark text.
 
 The **中 / EN** switch on the right of the first header line selects English or Simplified Chinese. Both languages cover all 30 levels, conceptual hints, instructions, unlock messages, milestone celebrations, dialogs, and accessibility labels. Switching language keeps the current puzzle and move history.
 
-**流光花园三十关版**：在原有十关的基础上，新增十关中等、七关困难和三关大师关卡，并按难度重新排序。每关最多三朵目标花。通关即可解锁下一关，不要求先获得金色花朵；尚未解锁的关卡不可选择。提示只提供思路，不展示完整操作步骤。项目同时支持 GitHub Pages 网页部署和本地离线游玩。
+**流光花园三十关版**：在原有十关的基础上，新增十关中等、七关困难和三关大师关卡，并按难度重新排序。每关最多三朵目标花。通关即可解锁下一关，尚未解锁的关卡不可选择。最后四关大师关卡的步数上限等于最少所需步数，通关也就获得金色花朵。提示只提供思路，不展示完整操作步骤。项目同时支持 GitHub Pages 网页部署和本地离线游玩。
 
 ## Play offline or run locally
 
@@ -40,12 +40,12 @@ Then open **http://localhost:8080**. `npm run dev` runs the same command. Servin
 - Undo restores both the previous amounts and the move. Restart begins the current garden again.
 - Tapping a connection whose endpoints are already equal uses no move.
 - Each level has two conceptual hints. The game does **not** show a full solution or a sequence of required moves.
-- Clear the current level within its move limit to unlock the next. A golden bloom is **not required** to advance. Any unlocked level can be replayed.
-- Earn a golden bloom by finishing in the displayed minimum number of moves. All 30 golden-bloom targets have exact optimality certificates. Beyond the one-move introductory level, the move limits leave room to clear a level without earning gold.
+- Clear the current level within its move limit to unlock the next. Any unlocked level can be replayed.
+- Earn a golden bloom by finishing in the displayed minimum number of moves. All 30 golden-bloom targets have exact optimality certificates. Levels 2–26 allow extra moves for an ordinary clear, so gold is optional there. The one-move introductory level and the final four Master levels have move limits equal to their minimums; every successful clear of those levels also earns a golden bloom.
 
 Keyboard: **Tab** to a pipe control, **Enter/Space** to share, **Z** to undo, and **R** to restart.
 
-中文规则：每个目标百分比都是**下限**，达到或超过即可，不必恰好相等。所有目标必须在步数限制内同时达标。正常通关即可前进，金色花朵是可选的最少步数挑战；全部三十关的金色花朵步数均已严格验证。
+中文规则：每个目标百分比都是**下限**，达到或超过即可，不必恰好相等。所有目标必须在步数限制内同时达标。在步数上限内通关即可前进。第 2–26 关允许使用多于最少步数的方式通关，金色花朵是可选挑战；第一关及第 27–30 关大师关卡的步数上限等于最少所需步数，通关即获得金色花朵。全部三十关的最少步数均已严格验证。
 
 ## Campaign and difficulty
 
@@ -90,10 +90,10 @@ The table lists move counts, not solution sequences. The displayed campaign numb
 | 24 | Two distant shores / 双岸遥光 | Hard | 2 | 16 | 12 |
 | 25 | The twin fountains / 双泉花语 | Hard | 3 | 17 | 13 |
 | 26 | Moonlit circle / 月下圆环 | Hard | 3 | 17 | 15 |
-| 27 | Almost still / 近乎宁静 | Master | 2 | 20 | 15 |
-| 28 | The last few drops / 最后几滴 | Master | 2 | 21 | 16 |
-| 29 | Perfect harmony / 和谐共鸣 | Master | 3 | 23 | 18 |
-| 30 | The long dawn / 长夜初晓 | Master | 1 | 24 | 19 |
+| 27 | Almost still / 近乎宁静 | Master | 2 | 15 | 15 |
+| 28 | The last few drops / 最后几滴 | Master | 2 | 16 | 16 |
+| 29 | Perfect harmony / 和谐共鸣 | Master | 3 | 18 | 18 |
+| 30 | The long dawn / 长夜初晓 | Master | 1 | 19 | 19 |
 
 ## Milestones and the final challenge
 
@@ -117,6 +117,10 @@ Progress, best move counts, language choice, and milestone acknowledgements are 
 The original ten puzzles retain their stable IDs, even though their displayed campaign positions have changed. The save migration matches existing records to those IDs instead of treating an old level number as a new campaign position. The old level 9, for example, is now campaign level 26; its best result remains attached to the same puzzle.
 
 Earlier saves may contain completed gardens beyond an uncleared gap. Those records are retained, but the new sequential unlocking rule still requires the intervening gardens to be cleared. A valid in-progress puzzle resumes only if it is unlocked in the new order; otherwise the game opens the next available garden. Existing records become useful as soon as their preceding levels are cleared.
+
+The stricter Master limits also apply to saved results. An earlier clear of levels 27–30 that used more than 15, 16, 18, or 19 moves, respectively, no longer counts as completed; those levels must be cleared again within the new limits. Existing golden-bloom results remain valid.
+
+新大师关步数上限也适用于旧存档。第 27–30 关过去的通关成绩若分别超过 15、16、18、19 步，将不再计为通关，需要按新上限重新挑战；已获得金色花朵的成绩仍然有效。
 
 Private browsing or a file-viewer app may not retain progress. Reopening a standalone file from a different location can also give it a different storage context, depending on the browser.
 

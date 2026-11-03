@@ -26,7 +26,8 @@ for (const [index, level] of levels.entries()) {
   assert.equal(level.parVerified, true, 'Publish only verified golden-bloom targets');
   assert.equal(certificate.optimalMoves, level.par);
   assert.equal(certificate.solution.length, level.par);
-  if (index > 0) assert.ok(level.budget > level.par, 'Progression has a more generous allowance than gold');
+  if (level.difficulty === 'Master') assert.equal(level.budget, certificate.optimalMoves, 'Master levels require an optimal clear');
+  else if (index > 0) assert.ok(level.budget > level.par, 'Earlier levels have a more generous allowance than gold');
   const limits = distances(level).map(distance => 100 / (distance + 1));
   let weights = initialWeights(level);
   const snapshots = [];
